@@ -1,0 +1,39 @@
+from django.urls import path,include
+from e_commerce import views
+from django.conf.urls import handler404
+from django.conf import settings
+from django.conf.urls.static import static
+from django.shortcuts import redirect
+
+from e_commerce.views import *
+ 
+ 
+
+urlpatterns = [
+    ########################################## page home ####################################
+    path('', lambda request: redirect('/Home/', permanent=True)),
+    path('Home/',Home,name='Home'),
+    
+    ######################################## page detail ####################################
+    path('Detail/<uuid:pk>/',Detail,name='Detail'),
+    path('Detail/produit/<uuid:pk>/',Detail_product,name='Detail_product'),
+    
+    ######################################### url  product  #################################
+    path('products/', ProductListView.as_view() , name='product'),
+    
+    ###################################### url  favoris  ####################################
+    path ('contact/',favoris,name='favoris'),
+    
+    ###################################### url  contact  ####################################
+    path ('favoris/',contact,name='contact'),
+
+
+    
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = views.page_not_found_view
+
+
+ 

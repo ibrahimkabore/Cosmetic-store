@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>Ghislaine Cosmetic-contact</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/ghislaine-icon.png' %}" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+
+    <script src="{% static 'js/hidden_input.js' %}"></script>
+
+</head>
+
+<body>
+	{% comment %} <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+
+	<!-- Header section -->
+	<header class="header-section header-normal">
+        <div class="container-fluid">
+            <!-- logo -->
+            <div class="site-logo">
+                <img src="{% static "img/logo/gislaine.jpg" %}" alt="logo">
+            </div>
+            <!-- responsive -->
+            <div class="nav-switch">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="header-right">
+                <a href="cart.html" class="card-bag"><img src="img/icons/bag.png" alt=""><span>2</span></a>
+                <input type="search" name="search" id="search-bar" placeholder="Recherche...">
+                <a href="#" class="search" id="search-icon"><i class="fa fa-search"></i></a>
+            </div>
+            <!-- site menu -->
+            <ul class="main-menu">
+                <li><a href="{% url 'Home'%}"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="{% url 'product'%}"><i class="fas fa-box-open"></i> Nos Produits</a></li>
+                <li><a href="categorie.html"><i class="fas fa-cubes"></i> Nos kits</a></li>
+                <li><a href="categorie.html"><i class="fas fa-shopping-cart"></i> Mon Panier</a></li>
+                <li><a href="{% url 'contact'%}"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </header>
+	<!-- Header section end -->
+
+
+	<!-- Page Info -->
+	<div class="page-info-section page-info">
+		<div class="container">
+            <h2>Contact</h2>
+			<div class="site-breadcrumb">
+				<a href="{% url 'Home'%}">Accueil</a> /
+				<span>Contact</span>
+			</div>
+			<img src="{% static 'img/square_bold.png' %}" alt="" class="page-info-art">
+		</div>
+	</div>
+	<!-- Page Info end -->
+
+
+	<!-- Page -->
+	<div class="page-area contact-page">
+		<div class="container spad">
+			<div class="text-center">
+				<h4 class="contact-title">Get in Touch</h4>
+			</div>
+			<form class="contact-form">
+				<div class="row">
+					<div class="col-md-6">
+						<input type="text" placeholder="First Name *">
+					</div>
+					<div class="col-md-6">
+						<input type="text" placeholder="Last Name *">
+					</div>
+					<div class="col-md-12">
+						<input type="text" placeholder="Subject">
+						<textarea placeholder="Message"></textarea>
+						<div class="text-center">
+							<button class="site-btn">Send Message</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="container contact-info-warp">
+			<div class="contact-card">
+				<div class="contact-info">
+					<h4>Shipping & Returnes</h4>
+					<p>Phone: +53 345 7953 32453</p>
+					<p>Email: yourmail@gmail.com</p>
+				</div>
+				<div class="contact-info">
+					<h4>Informations</h4>
+					<p>Phone: +53 345 7953 32453</p>
+					<p>Email: yourmail@gmail.com</p>
+				</div>
+			</div>
+		</div>
+		<div class="map-area">
+			<div class="map" id="map-canvas">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.77099979165!2d-3.9662229999999994!3d5.298389600000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1ed07de9aed05%3A0x18edb331f8b0c7df!2sGhislaine%20cosm%C3%A9tic!5e0!3m2!1sfr!2sci!4v1739180612768!5m2!1sfr!2sci" width="1550" height="660" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+		</div>
+	</div>
+	<!-- Page end -->
+
+
+	<!-- Footer top section -->
+	<section class="footer-top-section home-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-8 col-sm-12">
+					<div class="footer-widget about-widget">
+						<img src="img/logo/gislaine.jpg" class="footer-logo" alt="">
+						<div class="cards">
+							<img src="img/cards/5.png" alt="">
+							<img src="img/cards/4.png" alt="">
+							<img src="img/cards/3.png" alt="">
+							<img src="img/cards/2.png" alt="">
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">usefull Links</h6>
+						<ul>
+							<li><a href="#">Partners</a></li>
+							<li><a href="#">Bloggers</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Press</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Sitemap</h6>
+						<ul>
+							<li><a href="#">Partners</a></li>
+							<li><a href="#">Bloggers</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Press</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Shipping & returns</h6>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Track Orders</a></li>
+							<li><a href="#">Returns</a></li>
+							<li><a href="#">Jobs</a></li>
+							<li><a href="#">Shipping</a></li>
+							<li><a href="#">Blog</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Contact</h6>
+						<div class="text-box">
+							<p>Your Company Ltd </p>
+							<p>1481 Creekside Lane Avila Beach, CA 93424, </p>
+							<p>+53 345 7953 32453</p>
+							<p>office@youremail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer top section end -->
+
+
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<p class="copyright">
+				<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				Copyright &copy;
+				<script>document.write(new Date().getFullYear());</script> All rights reserved | Powered by <a
+					href="https://onma.io/" target="_blank">Onma</a>
+				<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+			</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+
+	    <!--====== Javascripts & Jquery ======-->
+		<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'js/mixitup.min.js' %}"></script>
+		<script src="{% static 'js/sly.min.js' %}"></script>
+		<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/core.min.js' %}"></script>
+		<script src="{% static 'js/script.js' %}"></script>
+
+	<!-- Map js -->
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWTIlluowDL-X4HbYQt3aDw_oi2JP0Krc&sensor=false"></script>
+	<script src="js/map.js"></script>
+
+
+
+</body>
+
+</html>

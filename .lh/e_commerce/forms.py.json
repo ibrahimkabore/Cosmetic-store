@@ -1,0 +1,46 @@
+{
+    "sourceFile": "e_commerce/forms.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1739206370560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739206404466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,78 @@\n from django import forms\r\n \r\n from .models import *\r\n from django.forms import  DateTimeInput\r\n+\r\n+\r\n+\r\n+#formulaire de connexion\r\n+class LoginForm(AuthenticationForm): \r\n+    \r\n+    username = forms.CharField(\r\n+        max_length=254,\r\n+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom d\\'utilisateur ou e-mail', 'id': 'username'})\r\n+    )\r\n+    password = forms.CharField(\r\n+        label=\"Mot de passe\",\r\n+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Mot de passe', 'id': 'password'})\r\n+    )\r\n+\r\n+#formualaire de verification\r\n+class VerificationForm(forms.Form):\r\n+ \r\n+    code = forms.CharField(max_length=6)\r\n+    \r\n+\r\n+\r\n+#formualire de creation de compte \r\n+class  PersonnelForm(UserCreationForm):\r\n+    class Meta:\r\n+        model = Personnel\r\n+        fields = ('first_name','last_name','photos', 'email','Contact','username','Personnel_type','password1', 'password2')\r\n+        \r\n+    def clean_email(self):\r\n+        email = self.cleaned_data.get('email')\r\n+        if Personnel.objects.filter(email=email).exists():\r\n+            raise ValidationError(\"Un compte avec cet e-mail existe déjà.\")\r\n+        return email\r\n+    \r\n+    def save(self, commit=True):\r\n+        user = super().save(commit=False)\r\n+        user.is_active = False  # Désactiver le compte jusqu'à la vérification\r\n+        if commit:\r\n+            user.save()\r\n+            code = str(random.randint(100000, 999999))\r\n+            VerificationCode.objects.create(user=user, code=code)\r\n+            send_mail(\r\n+                'Votre code de vérification',\r\n+                f'Votre code de vérification est {code}',\r\n+                'kaboremessi@gmail.com',\r\n+                [user.email],\r\n+                fail_silently=False,\r\n+            )\r\n+        return user\r\n+ \r\n+# 2ath\r\n+\r\n+class TwoFactorMethodForm(forms.Form):\r\n+    two_factor_method = forms.ChoiceField(\r\n+        choices=[\r\n+            ('email', 'Receive Code by Email'),\r\n+            ('google_auth', 'Use Google Authenticator')\r\n+        ],\r\n+        widget=forms.RadioSelect,\r\n+        label=\"Choose Two-Factor Authentication Method\"\r\n+    )\r\n+\r\n+class EmailVerificationForm(forms.Form):\r\n+    code = forms.CharField(\r\n+        max_length=6,\r\n+        widget=forms.TextInput(attrs={'placeholder': 'Enter 6-digit code'})\r\n+    )\r\n+\r\n+class GoogleAuthVerificationForm(forms.Form):\r\n+    code = forms.CharField(\r\n+        max_length=6,\r\n+        widget=forms.TextInput(attrs={'placeholder': 'Enter Google Authenticator code'})\r\n+    )\r\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739206471085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,16 +33,16 @@\n     \r\n \r\n \r\n #formualire de creation de compte \r\n-class  PersonnelForm(UserCreationForm):\r\n+class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n-        model = Personnel\r\n-        fields = ('first_name','last_name','photos', 'email','Contact','username','Personnel_type','password1', 'password2')\r\n+        model = CustomUser\r\n+        fields = ('first_name','last_name', 'email','Contact','username','Personnel_type','password1', 'password2')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n-        if Personnel.objects.filter(email=email).exists():\r\n+        if CustomUser.objects.filter(email=email).exists():\r\n             raise ValidationError(\"Un compte avec cet e-mail existe déjà.\")\r\n         return email\r\n     \r\n     def save(self, commit=True):\r\n"
+                },
+                {
+                    "date": 1739207444645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','Contact','username','Personnel_type','password1', 'password2')\r\n+        fields = ('first_name','last_name', 'email','Contact','username','password1', 'password2')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                },
+                {
+                    "date": 1739207528905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','Contact','username','password1', 'password2')\r\n+        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                },
+                {
+                    "date": 1739209558195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2')\r\n+        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','country')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                },
+                {
+                    "date": 1739209614147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','country')\r\n+        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','country','city','gender',)\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                },
+                {
+                    "date": 1739224128875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','country','city','gender',)\r\n+        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','gender')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                }
+            ],
+            "date": 1739206370560,
+            "name": "Commit-0",
+            "content": "import random\r\nfrom django.core.exceptions import ValidationError\r\nfrom crispy_forms.helper import FormHelper\r\nfrom crispy_forms.layout import Layout, Row,Column\r\nfrom django.core.mail import send_mail\r\nfrom crispy_forms.helper import FormHelper\r\nfrom crispy_forms.layout import Submit\r\nfrom django.contrib.auth.forms import UserCreationForm, AuthenticationForm\r\nfrom django.forms import modelformset_factory\r\nfrom django import forms\r\n\r\nfrom .models import *\r\nfrom django.forms import  DateTimeInput\r\n"
+        }
+    ]
+}

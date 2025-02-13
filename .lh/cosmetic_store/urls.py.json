@@ -1,0 +1,162 @@
+{
+    "sourceFile": "cosmetic_store/urls.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 36,
+            "patches": [
+                {
+                    "date": 1738687524211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738687551647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,8 @@\n     path('admin/', admin.site.urls),\r\n \r\n ] \r\n urlpatterns += i18n_patterns(\r\n-    path('', include('website.urls')),\r\n+    path('', include('e_commerce.urls')),\r\n )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n"
+                },
+                {
+                    "date": 1738689147233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,9 @@\n \r\n ] \r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n-)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+)\r\n \r\n+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+\r\n"
+                },
+                {
+                    "date": 1738689186575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,12 @@\n \r\n urlpatterns = [\r\n \r\n     path('admin/', admin.site.urls),\r\n+    path('e_commerce/', include('e_commerce.urls')),\r\n \r\n+\r\n ] \r\n-urlpatterns += i18n_patterns(\r\n-    path('', include('e_commerce.urls')),\r\n-)\r\n-\r\n+ \r\n # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n"
+                },
+                {
+                    "date": 1738689574029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n urlpatterns = [\r\n \r\n     path('admin/', admin.site.urls),\r\n-    path('e_commerce/', include('e_commerce.urls')),\r\n+    path('', include('e_commerce.urls')),\r\n \r\n \r\n ] \r\n  \r\n"
+                },
+                {
+                    "date": 1738690087477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,18 @@\n from django.urls import path, include\r\n from django.conf import settings\r\n from django.conf.urls.static import static\r\n from django.conf.urls.i18n import i18n_patterns\r\n+from django.conf.urls import handler404\r\n \r\n+import e_commerce\r\n urlpatterns = [\r\n \r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n \r\n \r\n ] \r\n- \r\n+handler404 =  e_commerce.views.custom_page_not_found_view\r\n # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n"
+                },
+                {
+                    "date": 1738690123356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,16 +5,15 @@\n from django.conf.urls.static import static\r\n from django.conf.urls.i18n import i18n_patterns\r\n from django.conf.urls import handler404\r\n \r\n-import e_commerce\r\n urlpatterns = [\r\n \r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n \r\n \r\n ] \r\n-handler404 =  e_commerce.views.custom_page_not_found_view\r\n+handler404 = views.custom_page_not_found_view\r\n # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n"
+                },
+                {
+                    "date": 1738690132997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n from django.conf import settings\r\n from django.conf.urls.static import static\r\n from django.conf.urls.i18n import i18n_patterns\r\n from django.conf.urls import handler404\r\n+from e_commerce import views\r\n \r\n urlpatterns = [\r\n \r\n     path('admin/', admin.site.urls),\r\n"
+                },
+                {
+                    "date": 1738690234046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,23 @@\n+\"\"\"\r\n+URL configuration for cosmetic_store project.\r\n+\r\n+The `urlpatterns` list routes URLs to views. For more information please see:\r\n+    https://docs.djangoproject.com/en/5.1/topics/http/urls/\r\n+Examples:\r\n+Function views\r\n+    1. Add an import:  from my_app import views\r\n+    2. Add a URL to urlpatterns:  path('', views.home, name='home')\r\n+Class-based views\r\n+    1. Add an import:  from other_app.views import Home\r\n+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\r\n+Including another URLconf\r\n+    1. Import the include() function: from django.urls import include, path\r\n+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n+\"\"\"\r\n+\r\n from django.contrib import admin\r\n from django.urls import path\r\n-from django.urls import path, include\r\n-from django.conf import settings\r\n-from django.conf.urls.static import static\r\n-from django.conf.urls.i18n import i18n_patterns\r\n-from django.conf.urls import handler404\r\n-from e_commerce import views\r\n \r\n urlpatterns = [\r\n-\r\n-    path('admin/', admin.site.urls),\r\n-    path('', include('e_commerce.urls')),\r\n-\r\n-\r\n-] \r\n-handler404 = views.custom_page_not_found_view\r\n-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n-\r\n+    path(\"admin/\", admin.site.urls),\r\n+]\r\n"
+                },
+                {
+                    "date": 1738690598579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,6 @@\n from django.urls import path\r\n \r\n urlpatterns = [\r\n     path(\"admin/\", admin.site.urls),\r\n+    path(\" \", include(\"e_commerce.urls),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738690606233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n from django.urls import path\r\n \r\n urlpatterns = [\r\n     path(\"admin/\", admin.site.urls),\r\n-    path(\" \", include(\"e_commerce.urls),\r\n+    path(\" \", include(\"e_commerce.urls\"),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738690632773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n \"\"\"\r\n \r\n from django.contrib import admin\r\n-from django.urls import path\r\n+from django.urls import path,include\r\n \r\n urlpatterns = [\r\n     path(\"admin/\", admin.site.urls),\r\n-    path(\" \", include(\"e_commerce.urls\"),\r\n+    path(\" \", include(\"e_commerce.urls\")),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738690788484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n from django.urls import path,include\r\n \r\n urlpatterns = [\r\n     path(\"admin/\", admin.site.urls),\r\n-    path(\" \", include(\"e_commerce.urls\")),\r\n+    path('', include(\"e_commerce.urls\")),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738690875244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,7 @@\n from django.contrib import admin\r\n from django.urls import path,include\r\n \r\n urlpatterns = [\r\n-    path(\"admin/\", admin.site.urls),\r\n-    path('', include(\"e_commerce.urls\")),\r\n+    path('admin/', admin.site.urls),\r\n+    path('e_commerce', include('e_commerce.urls')),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738690896268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n from django.urls import path,include\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n-    path('e_commerce', include('e_commerce.urls')),\r\n+    path('e_commerce/', include('e_commerce.urls')),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738691235392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n from django.urls import path,include\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n-    path('e_commerce/', include('e_commerce.urls')),\r\n+    path(' ', include('e_commerce.urls')),\r\n ]\r\n"
+                },
+                {
+                    "date": 1738691254091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,11 @@\n \r\n from django.contrib import admin\r\n from django.urls import path,include\r\n \r\n+from e_commerce import views\r\n+\r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path(' ', include('e_commerce.urls')),\r\n ]\r\n+handler404 =  views.custom_page_not_found_view\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738691275661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,24 +1,9 @@\n-\"\"\"\r\n-URL configuration for cosmetic_store project.\r\n+ \r\n \r\n-The `urlpatterns` list routes URLs to views. For more information please see:\r\n-    https://docs.djangoproject.com/en/5.1/topics/http/urls/\r\n-Examples:\r\n-Function views\r\n-    1. Add an import:  from my_app import views\r\n-    2. Add a URL to urlpatterns:  path('', views.home, name='home')\r\n-Class-based views\r\n-    1. Add an import:  from other_app.views import Home\r\n-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\r\n-Including another URLconf\r\n-    1. Import the include() function: from django.urls import include, path\r\n-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n-\"\"\"\r\n-\r\n from django.contrib import admin\r\n from django.urls import path,include\r\n-\r\n+from django.conf.urls import handler404\r\n from e_commerce import views\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n"
+                },
+                {
+                    "date": 1738691569309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,24 @@\n- \r\n+\"\"\"\r\n+URL configuration for cosmetic_store project.\r\n \r\n+The `urlpatterns` list routes URLs to views. For more information please see:\r\n+    https://docs.djangoproject.com/en/5.1/topics/http/urls/\r\n+Examples:\r\n+Function views\r\n+    1. Add an import:  from my_app import views\r\n+    2. Add a URL to urlpatterns:  path('', views.home, name='home')\r\n+Class-based views\r\n+    1. Add an import:  from other_app.views import Home\r\n\\ No newline at end of file\n+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\r\n+Including another URLconf\r\n+    1. Import the include() function: from django.urls import include, path\r\n+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n+\"\"\"\r\n+\r\n from django.contrib import admin\r\n from django.urls import path,include\r\n-from django.conf.urls import handler404\r\n-from e_commerce import views\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path(' ', include('e_commerce.urls')),\r\n ]\r\n-handler404 =  views.custom_page_not_found_view\n"
+                },
+                {
+                    "date": 1738691978826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n from django.urls import path,include\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n-    path(' ', include('e_commerce.urls')),\r\n-]\n\\ No newline at end of file\n+    path('', include('e_commerce.urls')),\r\n+]\r\n"
+                },
+                {
+                    "date": 1738693883367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,16 @@\n     1. Import the include() function: from django.urls import include, path\r\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n \"\"\"\r\n \r\n+from django.conf.urls import static\r\n from django.contrib import admin\r\n from django.urls import path,include\r\n \r\n+from cosmetic_store import settings\r\n+\r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n-]\r\n+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+\r\n"
+                },
+                {
+                    "date": 1738693914295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,6 @@\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n-\r\n+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\r\n+ \r\n"
+                },
+                {
+                    "date": 1738693941877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,6 +23,5 @@\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\r\n- \r\n+] \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738702059224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,6 @@\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n-] \n\\ No newline at end of file\n+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                },
+                {
+                    "date": 1738702132173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,14 @@\n     1. Import the include() function: from django.urls import include, path\r\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n \"\"\"\r\n \r\n-from django.conf.urls import static\r\n from django.contrib import admin\r\n-from django.urls import path,include\r\n+from django.urls import path\r\n+from django.urls import path, include\r\n+from django.conf import settings\r\n+from django.conf.urls.static import static\r\n+from django.conf.urls.i18n import i18n_patterns\r\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n"
+                },
+                {
+                    "date": 1738702145172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\r\n \"\"\"\r\n \r\n from django.contrib import admin\r\n-from django.urls import path\r\n from django.urls import path, include\r\n from django.conf import settings\r\n from django.conf.urls.static import static\r\n from django.conf.urls.i18n import i18n_patterns\r\n"
+                },
+                {
+                    "date": 1738702272240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,4 +27,10 @@\n     path('admin/', admin.site.urls),\r\n     path('', include('e_commerce.urls')),\r\n ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+\r\n+\r\n+urlpatterns += i18n_patterns(\r\n+    path('', include('website.urls')),\r\n+)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                },
+                {
+                    "date": 1738702287434,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n-    path('', include('e_commerce.urls')),\r\n+     \r\n ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1738702305926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,11 @@\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n     path('admin/', admin.site.urls),\r\n-     \r\n ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('website.urls')),\r\n-)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+) \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738702335766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,13 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n-    path('admin/', admin.site.urls),\r\n+   \r\n ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('website.urls')),\r\n+    path('admin/', admin.site.urls),\r\n ) \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738702356595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n \r\n urlpatterns += i18n_patterns(\r\n-    path('', include('website.urls')),\r\n+    path('', include('e_commerce.urls')),\r\n     path('admin/', admin.site.urls),\r\n ) \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738702394610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n-   \r\n+\r\n ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1738702968268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,12 +24,11 @@\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n \r\n-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n+] \r\n \r\n-\r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n     path('admin/', admin.site.urls),\r\n\\ No newline at end of file\n-) \n+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                },
+                {
+                    "date": 1739315941774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,12 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n-\r\n+ path('admin/', admin.site.urls),\r\n ] \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n-    path('admin/', admin.site.urls),\r\n+   \r\n\\ No newline at end of file\n ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                },
+                {
+                    "date": 1739315976865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,12 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n- path('admin/', admin.site.urls),\r\n+ path('admin', admin.site.urls),\r\n ] \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n    \r\n ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n\\ No newline at end of file\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                },
+                {
+                    "date": 1739316566710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n- path('admin', admin.site.urls),\r\n+path('admin', admin.site.urls),\r\n ] \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n"
+                },
+                {
+                    "date": 1739319918108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,12 @@\n \r\n from cosmetic_store import settings\r\n \r\n urlpatterns = [\r\n-path('admin', admin.site.urls),\r\n+path('admin/', admin.site.urls),\r\n ] \r\n \r\n urlpatterns += i18n_patterns(\r\n     path('', include('e_commerce.urls')),\r\n    \r\n ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n\\ No newline at end of file\n-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n"
+                }
+            ],
+            "date": 1738687524211,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\r\nfrom django.urls import path\r\nfrom django.urls import path, include\r\nfrom django.conf import settings\r\nfrom django.conf.urls.static import static\r\nfrom django.conf.urls.i18n import i18n_patterns\r\n\r\nurlpatterns = [\r\n\r\n    path('admin/', admin.site.urls),\r\n\r\n] \r\nurlpatterns += i18n_patterns(\r\n    path('', include('website.urls')),\r\n)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\\\r\n+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\r\n\r\n"
+        }
+    ]
+}

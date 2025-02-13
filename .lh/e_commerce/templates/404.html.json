@@ -1,0 +1,22 @@
+{
+    "sourceFile": "e_commerce/templates/404.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1738692452495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738749077471,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,30 +2,36 @@\n <html lang=\"fr\">\r\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n-    <title>Page non trouvée</title>\r\n+    <title>Site en construction</title>\r\n     <style>\r\n         body {\r\n             font-family: Arial, sans-serif;\r\n             text-align: center;\r\n             padding: 50px;\r\n+            background-color: #f4f4f4;\r\n         }\r\n         h1 {\r\n             font-size: 50px;\r\n-            color: red;\r\n+            color: #ff9900;\r\n         }\r\n         p {\r\n             font-size: 18px;\r\n+            color: #333;\r\n         }\r\n         a {\r\n-            color: blue;\r\n+            color: #0066cc;\r\n             text-decoration: none;\r\n+            font-weight: bold;\r\n         }\r\n+        a:hover {\r\n+            text-decoration: underline;\r\n+        }\r\n     </style>\r\n </head>\r\n <body>\r\n-    <h1>404 - Page non trouvée</h1>\r\n-    <p>Oups ! La page que vous cherchez n'existe pas 😢.</p>\r\n+    <h1>Site en construction 🚧</h1>\r\n+    <p>Nous travaillons actuellement sur notre site. Il sera bientôt disponible. Merci de votre patience !</p>\r\n     <a href=\"/\">Retour à la page d'accueil</a>\r\n </body>\r\n </html>\r\n"
+                }
+            ],
+            "date": 1738692452495,
+            "name": "Commit-0",
+            "content": "<!DOCTYPE html>\r\n<html lang=\"fr\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Page non trouvée</title>\r\n    <style>\r\n        body {\r\n            font-family: Arial, sans-serif;\r\n            text-align: center;\r\n            padding: 50px;\r\n        }\r\n        h1 {\r\n            font-size: 50px;\r\n            color: red;\r\n        }\r\n        p {\r\n            font-size: 18px;\r\n        }\r\n        a {\r\n            color: blue;\r\n            text-decoration: none;\r\n        }\r\n    </style>\r\n</head>\r\n<body>\r\n    <h1>404 - Page non trouvée</h1>\r\n    <p>Oups ! La page que vous cherchez n'existe pas 😢.</p>\r\n    <a href=\"/\">Retour à la page d'accueil</a>\r\n</body>\r\n</html>\r\n"
+        }
+    ]
+}

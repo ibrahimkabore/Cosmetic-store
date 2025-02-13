@@ -1,0 +1,30 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{% load static i18n %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Google Authenticator Setup</h2>
+                </div>
+                <div class="card-body text-center">
+                    <p>Scanner ce code QR avec l'application Google Authenticator</p>
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" class="img-fluid mb-3">
+                     <div class="alert alert-info">
+                        <strong>Manual Entry:</strong>
+                        <p>If you can't scan the QR code, use this secret:</p>
+                        <code>{{ secret }}</code>
+                    </div>  
+                    
+                    <a href="{% url 'google_auth_verification' %}" class="btn btn-primary mt-3">
+                        I Have Set Up Google Authenticator
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

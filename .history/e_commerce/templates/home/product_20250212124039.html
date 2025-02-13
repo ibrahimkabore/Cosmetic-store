@@ -1,0 +1,347 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>Ghislaine Cosmetic-produit</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/ghislaine-icon.png' %}" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     
+    <script src="{% static 'js/hidden_input.js' %}"></script>
+
+</head>
+ 
+
+<body>
+	{% comment %} <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+
+	<!-- Header section -->
+	<header class="header-section header-normal">
+		<div class="container-fluid">
+			<!-- logo -->
+			<div class="site-logo">
+				<img src="{% static "img/logo/gislaine.jpg" %}" alt="logo">
+			</div>
+            <!-- responsive -->
+            <div class="nav-switch">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="header-right">
+                <div class="user-connection">
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <a href="#" class="user-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Apply the same style as login button to Mon Profil -->
+                            <a class="dropdown-item" href=" ">
+                                <i class="fas fa-user-cog"></i> Mon Profil
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'deconnexion' %}">
+                                <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            </a>
+                        </div>
+                    </div>
+                    
+                    {% else %}
+                        <a href="{% url 'login' %}" class="login-btn">
+                            <i class="fas fa-user"></i> Connexion
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+			<!-- site menu -->
+            <ul class="main-menu">
+                <li><a href="{% url 'Home' %}">🏠 Accueil</a></li>
+                <li><a href="{% url 'product' %}">📦 Nos Produits</a></li>
+                <li><a href="{% url 'shoppingcart' %}">🛒 Mon Panier</a></li>
+                <li><a href="{% url 'favoris' %}">❤️ Mes Favoris</a></li>      
+                <li><a href="{% url 'contact' %}">✉️ Contact</a></li>
+            </ul>
+            
+		</div>
+	</header>
+	<!-- Header section end -->
+
+
+	<!-- Page Info -->
+	<div class="page-info-section page-info-big">
+		<div class="container">
+            <h2>🛍️ Produit</h2>
+			<div class="site-breadcrumb">
+				<a href="{% url 'Home'%}">Accueil</a> /
+				<span>Produit</span>
+			</div>
+			<img src="{% static 'img/square_bold.png' %}" alt="" class="page-info-art">
+		</div>
+	</div>
+	<!-- Page Info end -->
+
+
+	<!-- Page -->
+	{% load static %}
+
+<div class="page-area categorie-page spad">
+ 
+   <div class="container">
+    <!-- Filtres et recherche -->
+    <div class="categorie-filter-wrap">
+        <div class="cf-right">
+            <div class="cf-layouts">
+                <a href="#" class="layout-switch" data-layout="list" title="List Layout">
+                    <i class="fas fa-list"></i>
+                </a>
+                <a href="#" class="layout-switch active" data-layout="grid" title="Grid Layout">
+                    <i class="fas fa-th"></i>
+                </a>
+            </div>
+            <form method="get" ,action="">
+                <input type="search" name="search_name" id="search-bar" 
+                       value="{{ search_name }}" placeholder="Recherche...">
+                
+                <select name="category">
+                    <option value="">Sélectionner un produit</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" 
+                            {% if category_id|stringformat:"s" == category.id|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="parent_category">
+                    <option value="">Sélectionner une catégorie de teint</option>
+                    {% for parent in parent_categories %}
+                        <option value="{{ parent.id }}"
+                            {% if parent_category_id|stringformat:"s" == parent.id|stringformat:"s" %}selected{% endif %}>
+                            {{ parent.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <!-- Liste des produits -->
+    <div class="row" id="products-container">
+        {% for product in products %}
+        <div class="col-lg-3">
+            <div class="product-item">
+                <figure>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'img/products/default.jpg' %}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="pi-meta">
+                        <div class="pi-m-left">
+                            <a href="{% url 'Detail_product' product.pk  %}" class="detail-link">
+                                <i class="fa fa-eye"></i>
+                                <p>Detail</p>
+                            </a>
+                        </div>
+                        <div class="pi-m-right">
+                            <i class="fa fa-heart-o"></i>
+                            <p>Save</p>
+                        </div>
+                    </div>
+                </figure>
+                <div class="product-info">
+                    <h6>{{ product.name }}</h6>
+                    <p>{{ product.price|intcomma }} CFA</p>                    
+                    <a href="#" class="site-btn btn-line">ADD TO CART</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>Aucun produit trouvé</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+</div>
+
+</div>
+
+	<!-- Page -->
+
+
+	<!-- Footer top section -->
+	<section class="footer-top-section home-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-8 col-sm-12">
+					<div class="footer-widget about-widget">
+						<img src="img/logo/gislaine.jpg" class="footer-logo" alt="">
+						<div class="cards">
+							<img src="img/cards/5.png" alt="">
+							<img src="img/cards/4.png" alt="">
+							<img src="img/cards/3.png" alt="">
+							<img src="img/cards/2.png" alt="">
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">usefull Links</h6>
+						<ul>
+							<li><a href="#">Partners</a></li>
+							<li><a href="#">Bloggers</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Press</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Sitemap</h6>
+						<ul>
+							<li><a href="#">Partners</a></li>
+							<li><a href="#">Bloggers</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Press</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Shipping & returns</h6>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Track Orders</a></li>
+							<li><a href="#">Returns</a></li>
+							<li><a href="#">Jobs</a></li>
+							<li><a href="#">Shipping</a></li>
+							<li><a href="#">Blog</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">Contact</h6>
+						<div class="text-box">
+							<p>Your Company Ltd </p>
+							<p>1481 Creekside Lane Avila Beach, CA 93424, </p>
+							<p>+53 345 7953 32453</p>
+							<p>office@youremail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer top section end -->
+
+
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<p class="copyright">
+				<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				Copyright &copy;
+				<script>document.write(new Date().getFullYear());</script> All rights reserved | Powered by <a
+					href="https://onma.io/" target="_blank">Onma</a>
+				<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+			</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	    <!--====== Javascripts & Jquery ======-->
+		<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'js/mixitup.min.js' %}"></script>
+		<script src="{% static 'js/sly.min.js' %}"></script>
+		<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/core.min.js' %}"></script>
+		<script src="{% static 'js/script.js' %}"></script>
+ 
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gestion de la vue liste/grille
+        const layoutSwitches = document.querySelectorAll('.layout-switch');
+        const productsContainer = document.getElementById('products-container');
+        
+        layoutSwitches.forEach(switchBtn => {
+            switchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Retirer la classe active de tous les boutons
+                layoutSwitches.forEach(s => s.classList.remove('active'));
+                // Ajouter la classe active au bouton cliqué
+                this.classList.add('active');
+                
+                // Changer la vue
+                if (this.dataset.layout === 'list') {
+                    productsContainer.classList.add('list-view');
+                    productsContainer.classList.remove('grid-view');
+                } else {
+                    productsContainer.classList.add('grid-view');
+                    productsContainer.classList.remove('list-view');
+                }
+            });
+        });
+    
+        // Soumission automatique du formulaire lors du changement des select
+        const selects = document.querySelectorAll('select[name="category"], select[name="parent_category"]');
+        selects.forEach(select => {
+            select.addEventListener('change', function() {
+                // Assurez-vous que le formulaire existe
+                const form = this.closest('form');
+                if (form) {
+                    form.submit();
+                }
+            });
+        });
+    
+        // Gérer la recherche avec délai
+        const searchInput = document.querySelector('input[name="search_name"]');
+        let searchTimeout;
+    
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const form = this.closest('form');
+                if (form) {
+                    searchTimeout = setTimeout(() => {
+                        form.submit();
+                    }, 500);
+                }
+            });
+        }
+    });
+</script>
+</html>
+ 
+ 

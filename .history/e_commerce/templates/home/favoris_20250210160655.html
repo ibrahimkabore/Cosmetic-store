@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauté Cosmétique - Authentification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #ff1493;
+        }
+        .switch-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page de Connexion -->
+    <div id="login-page" class="container">
+        <h2>Connexion</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Mot de passe" required>
+            </div>
+            <button type="submit" class="btn">Se connecter</button>
+        </form>
+        <div class="switch-form">
+            <a href="#" onclick="showPage('register')">Créer un compte</a> | 
+            <a href="#" onclick="showPage('recover')">Mot de passe oublié</a>
+        </div>
+    </div>
+
+    <!-- Page de Création de Compte -->
+    <div id="register-page" class="container" style="display:none;">
+        <h2>Créer un Compte</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <input type="text" placeholder="Nom" required>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Prénom" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Mot de passe" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Confirmer mot de passe" required>
+            </div>
+            <button type="submit" class="btn">S'inscrire</button>
+        </form>
+        <div class="switch-form">
+            <a href="#" onclick="showPage('login')">J'ai déjà un compte</a>
+        </div>
+    </div>
+
+    <!-- Page de Récupération de Mot de Passe -->
+    <div id="recover-page" class="container" style="display:none;">
+        <h2>Récupérer Mot de Passe</h2>
+        <form id="recover-form">
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <button type="submit" class="btn">Réinitialiser</button>
+        </form>
+        <div class="switch-form">
+            <a href="#" onclick="showPage('login')">Retour à la connexion</a>
+        </div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            const pages = ['login', 'register', 'recover'];
+            pages.forEach(p => {
+                document.getElementById(`${p}-page`).style.display = 
+                    p === page ? 'block' : 'none';
+            });
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Logique de connexion à implémenter
+            alert('Connexion en cours...');
+        });
+
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Logique d'inscription à implémenter
+            alert('Inscription en cours...');
+        });
+
+        document.getElementById('recover-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Logique de récupération de mot de passe à implémenter
+            alert('Réinitialisation en cours...');
+        });
+    </script>
+</body>
+</html>

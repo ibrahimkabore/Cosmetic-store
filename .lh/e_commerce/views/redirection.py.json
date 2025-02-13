@@ -1,0 +1,26 @@
+{
+    "sourceFile": "e_commerce/views/redirection.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1738702751204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738703038719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n from django.http import HttpResponse\r\n from django.shortcuts import render\r\n \r\n+#### error 404 #######\r\n def page_not_found_view(request, exception):\r\n     return render(request, '404.html', {}, status=404)\r\n \r\n \r\n-def votre_vue(request):\r\n\\ No newline at end of file\n-    return HttpResponse(\"Page personnalisée accessible\")\n+###\r\n+ \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738703084836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n def page_not_found_view(request, exception):\r\n     return render(request, '404.html', {}, status=404)\r\n \r\n \r\n-###\r\n- \n\\ No newline at end of file\n+### error 500   #######\r\n+\r\n"
+                }
+            ],
+            "date": 1738702751204,
+            "name": "Commit-0",
+            "content": "from django.http import HttpResponse\r\nfrom django.shortcuts import render\r\n\r\ndef page_not_found_view(request, exception):\r\n    return render(request, '404.html', {}, status=404)\r\n\r\n\r\ndef votre_vue(request):\r\n    return HttpResponse(\"Page personnalisée accessible\")"
+        }
+    ]
+}

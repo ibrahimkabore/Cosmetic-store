@@ -1,0 +1,118 @@
+{
+    "sourceFile": "e_commerce/views/favoris.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 25,
+            "patches": [
+                {
+                    "date": 1739201639035,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739201882085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n def favoris (request,pk):\r\n-    return render(request, 'home/.html')\n\\ No newline at end of file\n+    return render(request, 'home/favoris.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739202183790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n-def favoris (request,pk):\r\n+def favoris (request ):\r\n     return render(request, 'home/favoris.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739202748726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n def favoris (request ):\r\n+    favorite_products = Product.objects.filter()\r\n     return render(request, 'home/favoris.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739202787218,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n def favoris (request ):\r\n-    favorite_products = Product.objects.filter()\r\n+    favorite_products = Product.objects.filter(favorite='es')\r\n     return render(request, 'home/favoris.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739202816630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n def favoris (request ):\r\n-    favorite_products = Product.objects.filter(favorite='es')\r\n-    return render(request, 'home/favoris.html')\n\\ No newline at end of file\n+    favorite_products = Product.objects.filter(favorite='Yes')\r\n+    \r\n+    return render(request, 'home/favoris.html',context)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739202885544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,5 +2,9 @@\n from e_commerce.models import Product\r\n def favoris (request ):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n+    context={\r\n+        'favorite_products': favorite_products,  # List of favorite products\r\n+    }\r\n+    \r\n     return render(request, 'home/favoris.html',context)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739226107547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n+@method_decorator(login_required, name='dispatch')\r\n def favoris (request ):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n     context={\r\n"
+                },
+                {
+                    "date": 1739226120578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n+from django.utils.decorators import method_decorator\r\n+\r\n @method_decorator(login_required, name='dispatch')\r\n def favoris (request ):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n"
+                },
+                {
+                    "date": 1739226134154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product\r\n from django.utils.decorators import method_decorator\r\n+from django.contrib.auth.decorators import login_required\r\n \r\n+\r\n @method_decorator(login_required, name='dispatch')\r\n def favoris (request ):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n"
+                },
+                {
+                    "date": 1739269606132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from django.contrib.auth.decorators import login_required\r\n \r\n \r\n @method_decorator(login_required, name='dispatch')\r\n-def favoris (request ):\r\n+def favoris (request):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n     context={\r\n         'favorite_products': favorite_products,  # List of favorite products\r\n"
+                },
+                {
+                    "date": 1739269622540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django.utils.decorators import method_decorator\r\n from django.contrib.auth.decorators import login_required\r\n \r\n \r\n-@method_decorator(login_required, name='dispatch')\r\n+@login_required\r\n def favoris (request):\r\n     favorite_products = Product.objects.filter(favorite='Yes')\r\n     \r\n     context={\r\n"
+                },
+                {
+                    "date": 1739315243138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,12 @@\n from django.shortcuts import get_object_or_404, render\r\n-from e_commerce.models import Product\r\n+from e_commerce.models import Product,Favorite\r\n from django.utils.decorators import method_decorator\r\n from django.contrib.auth.decorators import login_required\r\n \r\n \r\n @login_required\r\n-def favoris (request):\r\n-    favorite_products = Product.objects.filter(favorite='Yes')\r\n-    \r\n-    context={\r\n-        'favorite_products': favorite_products,  # List of favorite products\r\n-    }\r\n-    \r\n\\ No newline at end of file\n-    return render(request, 'home/favoris.html',context)\n+def favorite_list(request):\r\n+    favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n+    return render(request, 'favorites.html', {\r\n+        'favorites': favorites\r\n+    })\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739315324820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import Product,Favorite\r\n-from django.utils.decorators import method_decorator\r\n from django.contrib.auth.decorators import login_required\r\n+from django.http import JsonResponse\r\n+from django.shortcuts import render\r\n \r\n-\r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-    return render(request, 'favorites.html', {\r\n+    return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n     })\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739315359996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,6 @@\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n-    })\n\\ No newline at end of file\n+    })\r\n+\r\n"
+                },
+                {
+                    "date": 1739315379323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,28 @@\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n     })\r\n \r\n+@login_required\r\n+def toggle_favorite(request, product_id):\r\n+    try:\r\n+        product = Product.objects.get(id=product_id)\r\n+        favorite, created = Favorite.objects.get_or_create(\r\n+            user=request.user,\r\n+            product=product\r\n+        )\r\n+        \r\n+        if not created:\r\n+            favorite.delete()\r\n+            is_favorite = False\r\n+        else:\r\n+            is_favorite = True\r\n+            \r\n+        return JsonResponse({\r\n+            'status': 'success',\r\n+            'is_favorite': is_favorite\r\n+        })\r\n+    except Product.DoesNotExist:\r\n+        return JsonResponse({\r\n+            'status': 'error',\r\n+            'message': 'Product not found'\r\n+        }, status=404)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739315399267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from django.http import JsonResponse\r\n from django.shortcuts import render\r\n \r\n @login_required\r\n-def favorite_list(request):\r\n+def favorite(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n     })\r\n"
+                },
+                {
+                    "date": 1739315446323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from django.http import JsonResponse\r\n from django.shortcuts import render\r\n \r\n @login_required\r\n-def favorite(request):\r\n+def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n     })\r\n"
+                },
+                {
+                    "date": 1739369296145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,45 @@\n+from django.shortcuts import get_object_or_404, render\r\n+from e_commerce.models import Product,Favorite\r\n+from django.contrib.auth.decorators import login_required\r\n+from django.http import JsonResponse\r\n+from django.shortcuts import render\r\n+\r\n+@login_required\r\n+def favorite_list(request):\r\n+    favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n+    return render(request, 'home/favoris.html', {\r\n+        'favorites': favorites\r\n+    })\r\n+\r\n+@login_required\r\n+def toggle_favorite(request, product_id):\r\n+    try:\r\n+        product = Product.objects.get(id=product_id)\r\n+        favorite, created = Favorite.objects.get_or_create(\r\n+            user=request.user,\r\n+            product=product\r\n+        )\r\n+        \r\n+        if not created:\r\n+            # If favorite exists, remove it\r\n+            favorite.delete()\r\n+            is_favorite = False\r\n+        else:\r\n+            is_favorite = True\r\n+            \r\n+        return JsonResponse({\r\n+            'status': 'success',\r\n+            'is_favorite': is_favorite,\r\n+            'message': 'Produit ajouté aux favoris' if is_favorite else 'Produit retiré des favoris'\r\n+        })\r\n+        \r\n+    except Product.DoesNotExist:\r\n+        return JsonResponse({\r\n+            'status': 'error',\r\n+            'message': 'Produit non trouvé'\r\n+        }, status=404)\r\n+    except Exception as e:\r\n+        return JsonResponse({\r\n+            'status': 'error',\r\n+            'message': str(e)\r\n+        }, status=500)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739370047516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n             product=product\r\n         )\r\n         \r\n         if not created:\r\n-            # If favorite exists, remove it\r\n             favorite.delete()\r\n             is_favorite = False\r\n         else:\r\n             is_favorite = True\r\n"
+                },
+                {
+                    "date": 1739374298908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,44 @@\n+from django.shortcuts import get_object_or_404, render\r\n+from e_commerce.models import Product,Favorite\r\n+from django.contrib.auth.decorators import login_required\r\n+from django.http import JsonResponse\r\n+from django.shortcuts import render\r\n+\r\n+@login_required\r\n+def favorite_list(request):\r\n+    favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n+    return render(request, 'home/favoris.html', {\r\n+        'favorites': favorites\r\n+    })\r\n+\r\n+@login_required\r\n+def toggle_favorite(request, product_id):\r\n+    try:\r\n+        product = Product.objects.get(id=product_id)\r\n+        favorite, created = Favorite.objects.get_or_create(\r\n+            user=request.user,\r\n+            product=product\r\n+        )\r\n+        \r\n+        if not created:\r\n+            favorite.delete()\r\n+            is_favorite = False\r\n+        else:\r\n+            is_favorite = True\r\n+            \r\n+        return JsonResponse({\r\n+            'status': 'success',\r\n+            'is_favorite': is_favorite,\r\n+            # 'message': 'Produit ajouté aux favoris' if is_favorite else 'Produit retiré des favoris'\r\n+        })\r\n+        \r\n+    except Product.DoesNotExist:\r\n+        return JsonResponse({\r\n+            'status': 'error',\r\n+            'message': 'Produit non trouvé'\r\n+        }, status=404)\r\n+    except Exception as e:\r\n+        return JsonResponse({\r\n+            'status': 'error',\r\n+            'message': str(e)\r\n+        }, status=500)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739374875010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,52 +28,8 @@\n             \r\n         return JsonResponse({\r\n             'status': 'success',\r\n             'is_favorite': is_favorite,\r\n-            # 'message': 'Produit ajouté aux favoris' if is_favorite else 'Produit retiré des favoris'\r\n-        })\r\n-        \r\n-    except Product.DoesNotExist:\r\n-        return JsonResponse({\r\n-            'status': 'error',\r\n-            'message': 'Produit non trouvé'\r\n-        }, status=404)\r\n-    except Exception as e:\r\n-        return JsonResponse({\r\n-            'status': 'error',\r\n-            'message': str(e)\r\n-        }, status=500)\n-from django.shortcuts import get_object_or_404, render\r\n-from e_commerce.models import Product,Favorite\r\n-from django.contrib.auth.decorators import login_required\r\n-from django.http import JsonResponse\r\n-from django.shortcuts import render\r\n-\r\n-@login_required\r\n-def favorite_list(request):\r\n-    favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-    return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites\r\n-    })\r\n-\r\n-@login_required\r\n-def toggle_favorite(request, product_id):\r\n-    try:\r\n-        product = Product.objects.get(id=product_id)\r\n-        favorite, created = Favorite.objects.get_or_create(\r\n-            user=request.user,\r\n-            product=product\r\n-        )\r\n-        \r\n-        if not created:\r\n-            favorite.delete()\r\n-            is_favorite = False\r\n-        else:\r\n-            is_favorite = True\r\n-            \r\n-        return JsonResponse({\r\n-            'status': 'success',\r\n-            'is_favorite': is_favorite,\r\n             'message': 'Produit ajouté aux favoris' if is_favorite else 'Produit retiré des favoris'\r\n         })\r\n         \r\n     except Product.DoesNotExist:\r\n@@ -84,42 +40,5 @@\n     except Exception as e:\r\n         return JsonResponse({\r\n             'status': 'error',\r\n             'message': str(e)\r\n-        }, status=500)\n-from django.shortcuts import get_object_or_404, render\r\n-from e_commerce.models import Product,Favorite\r\n-from django.contrib.auth.decorators import login_required\r\n-from django.http import JsonResponse\r\n-from django.shortcuts import render\r\n-\r\n-@login_required\r\n-def favorite_list(request):\r\n-    favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-    return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites\r\n-    })\r\n-\r\n-@login_required\r\n-def toggle_favorite(request, product_id):\r\n-    try:\r\n-        product = Product.objects.get(id=product_id)\r\n-        favorite, created = Favorite.objects.get_or_create(\r\n-            user=request.user,\r\n-            product=product\r\n-        )\r\n-        \r\n-        if not created:\r\n-            favorite.delete()\r\n-            is_favorite = False\r\n-        else:\r\n-            is_favorite = True\r\n-            \r\n-        return JsonResponse({\r\n-            'status': 'success',\r\n-            'is_favorite': is_favorite\r\n-        })\r\n-    except Product.DoesNotExist:\r\n-        return JsonResponse({\r\n-            'status': 'error',\r\n-            'message': 'Product not found'\r\n-        }, status=404)\n\\ No newline at end of file\n+        }, status=500)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739374959638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,20 @@\n \r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n+     # Vérifier si l'utilisateur est authentifié\r\n+    if request.user.is_authenticated:\r\n+        try:\r\n+            # Récupérer les favoris de l'utilisateur\r\n+            user_favorites = list(Favorite.objects.filter(\r\n+                user=request.user\r\n+            ).values_list('product_id', flat=True))\r\n+            user_favorites = [str(id) for id in user_favorites]\r\n+        except Exception as e:\r\n+            print(f\"Error fetching favorites: {e}\")\r\n+            user_favorites = []\r\n+            \r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites\r\n     })\r\n \r\n"
+                },
+                {
+                    "date": 1739374987439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n             print(f\"Error fetching favorites: {e}\")\r\n             user_favorites = []\r\n             \r\n     return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites\r\n+        'favorites': favorites,\r\n+        \r\n     })\r\n \r\n @login_required\r\n def toggle_favorite(request, product_id):\r\n"
+                },
+                {
+                    "date": 1739375016581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             user_favorites = []\r\n             \r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites,\r\n-        \r\n+        'user_favorites': user_favorites,\r\n     })\r\n \r\n @login_required\r\n def toggle_favorite(request, product_id):\r\n"
+                },
+                {
+                    "date": 1739375393019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,23 +6,11 @@\n \r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-     # Vérifier si l'utilisateur est authentifié\r\n-    if request.user.is_authenticated:\r\n-        try:\r\n-            # Récupérer les favoris de l'utilisateur\r\n-            user_favorites = list(Favorite.objects.filter(\r\n-                user=request.user\r\n-            ).values_list('product_id', flat=True))\r\n-            user_favorites = [str(id) for id in user_favorites]\r\n-        except Exception as e:\r\n-            print(f\"Error fetching favorites: {e}\")\r\n-            user_favorites = []\r\n-            \r\n+    \r\n     return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites,\r\n-        'user_favorites': user_favorites,\r\n+        'favorites': favorites\r\n     })\r\n \r\n @login_required\r\n def toggle_favorite(request, product_id):\r\n"
+                }
+            ],
+            "date": 1739201639035,
+            "name": "Commit-0",
+            "content": "from django.shortcuts import get_object_or_404, render\r\nfrom e_commerce.models import Product\r\ndef favoris (request,pk):\r\n    return render(request, 'home/.html')"
+        }
+    ]
+}

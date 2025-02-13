@@ -1,0 +1,26 @@
+{
+    "sourceFile": "cosmetic_store/routers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1738864031164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738864062705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n # routers.py\r\n class DatabaseRouter:\r\n     def db_for_read(self, model, **hints):\r\n-        if model._meta.app_label == 'your_app_name':\r\n+        if model._meta.app_label == '':\r\n             return 'mongodb'\r\n         return 'default'\r\n \r\n     def db_for_write(self, model, **hints):\r\n"
+                },
+                {
+                    "date": 1738864092634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n # routers.py\r\n class DatabaseRouter:\r\n     def db_for_read(self, model, **hints):\r\n-        if model._meta.app_label == '':\r\n+        if model._meta.app_label == 'e_commerce':\r\n             return 'mongodb'\r\n         return 'default'\r\n \r\n     def db_for_write(self, model, **hints):\r\n-        if model._meta.app_label == 'your_app_name':\r\n+        if model._meta.app_label == 'e_commerce':\r\n             return 'mongodb'\r\n         return 'default'\r\n \r\n     def allow_relation(self, obj1, obj2, **hints):\r\n"
+                }
+            ],
+            "date": 1738864031164,
+            "name": "Commit-0",
+            "content": "# routers.py\r\nclass DatabaseRouter:\r\n    def db_for_read(self, model, **hints):\r\n        if model._meta.app_label == 'your_app_name':\r\n            return 'mongodb'\r\n        return 'default'\r\n\r\n    def db_for_write(self, model, **hints):\r\n        if model._meta.app_label == 'your_app_name':\r\n            return 'mongodb'\r\n        return 'default'\r\n\r\n    def allow_relation(self, obj1, obj2, **hints):\r\n        return True\r\n\r\n    def allow_migrate(self, db, app_label, model_name=None, **hints):\r\n        return True"
+        }
+    ]
+}

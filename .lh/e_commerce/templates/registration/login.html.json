@@ -1,0 +1,26 @@
+{
+    "sourceFile": "e_commerce/templates/registration/login.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739210574392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739210594861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n             \n             <a class=\"navbar-brand mx-auto mt-2 flex-fill text-center\">\n                 <div class=\"w-100 mb-4\">\n                     <div class=\"navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column\">\n-                        <img src=\"{% static 'img/logo/ghislaine.jpg' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 200px; height: auto;\">\n+                        <img src=\"{% static 'img/logo/gislaine.jpg' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 200px; height: auto;\">\n                         <h2 class=\"h4 mb-1 mt-2\">Suivi empotage</h2>\n                     </div>\n                 </div> \n             </a>\n"
+                },
+                {
+                    "date": 1739210605907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n             \n             <a class=\"navbar-brand mx-auto mt-2 flex-fill text-center\">\n                 <div class=\"w-100 mb-4\">\n                     <div class=\"navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column\">\n-                        <img src=\"{% static 'img/logo/gislaine.jpg' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 200px; height: auto;\">\n+                        <img src=\"{% static 'img/logo/ghislaine.png' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 200px; height: auto;\">\n                         <h2 class=\"h4 mb-1 mt-2\">Suivi empotage</h2>\n                     </div>\n                 </div> \n             </a>\n"
+                }
+            ],
+            "date": 1739210574392,
+            "name": "Commit-0",
+            "content": "{% extends 'registration/base.html' %}\n{% load static %}\n{% load static i18n %}\n{% block content %}\n\n<div class=\"wrapper vh-100 d-flex align-items-center justify-content-center\">\n    <div class=\"row justify-content-center w-100\">\n        <form action=\"{% url 'login' %}\" method=\"post\" class=\"col-lg-3 col-md-4 col-10 text-center\">\n            \n            <a class=\"navbar-brand mx-auto mt-2 flex-fill text-center\">\n                <div class=\"w-100 mb-4\">\n                    <div class=\"navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column\">\n                        <img src=\"{% static 'img/logo/ghislaine.jp' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 200px; height: auto;\">\n                        <h2 class=\"h4 mb-1 mt-2\">Suivi empotage</h2>\n                    </div>\n                </div> \n            </a>\n            <hr>\n\n            {% csrf_token %}\n            {% if form.non_field_errors %}\n                <div class=\"alert alert-danger\">\n                    {% for error in form.non_field_errors %}\n                        <span style=\"font-size: 13px;\">\n                            {{ error|escape }}\n                        </span>\n                    {% endfor %}\n                </div>\n            {% endif %}\n\n            <div class=\"mb-3\">\n                <label for=\"username\">Nom d'utilisateur</label>\n                <input type=\"text\" id=\"username\" name=\"username\" class=\"form-control form-control-lg\" placeholder=\"Nom d'utilisateur ou e-mail\">\n            </div>\n\n            <div class=\"mb-3\">\n                <label for=\"password\">Mot de passe</label>\n                <input type=\"password\" id=\"password\" name=\"password\" class=\"form-control form-control-lg\" placeholder=\"Mot de passe\">\n            </div>\n\n            <div class=\"mb-3 d-grid\">\n                <button class=\"btn btn-primary btn-block\" type=\"submit\">Se connecter</button>\n            </div>\n\n            <hr>\n\n            <div class=\"options text-center\">\n                <a href=\"{% url 'password_reset' %}\">Mot de passe oublié ?</a><br>\n                <a href=\"\">Créer un compte !</a>\n            </div>\n        </form>\n    </div>\n</div>\n\n{% endblock %}\n"
+        }
+    ]
+}

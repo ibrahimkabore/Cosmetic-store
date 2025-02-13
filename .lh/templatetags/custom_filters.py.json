@@ -1,0 +1,46 @@
+{
+    "sourceFile": "templatetags/custom_filters.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1739190636154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739358699067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n         str_value = str(int(value))[::-1]\n         # Ajouter les points tous les 3 chiffres\n         groups = [str_value[i:i+3] for i in range(0, len(str_value), 3)]\n         # Rejoindre avec des points et réinverser\n-        formatted = '.'.join(groups)[::-1]\n+        formatted = ','.join(groups)[::-1]\n         return formatted\n     except (ValueError, TypeError):\n         return value\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739358947006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n         str_value = str(int(value))[::-1]\n         # Ajouter les points tous les 3 chiffres\n         groups = [str_value[i:i+3] for i in range(0, len(str_value), 3)]\n         # Rejoindre avec des points et réinverser\n-        formatted = ','.join(groups)[::-1]\n+        formatted = '.'.join(groups)[::-1]\n         return formatted\n     except (ValueError, TypeError):\n         return value\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739395214014,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,12 @@\n         # Rejoindre avec des points et réinverser\n         formatted = '.'.join(groups)[::-1]\n         return formatted\n     except (ValueError, TypeError):\n-        return value\n\\ No newline at end of file\n+        return value\n+\n+@register.filter\n+def multiply(value, arg):\n+    try:\n+        return value * arg\n+    except (TypeError, ValueError):\n+        return 0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739395282648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n         return value\n \n @register.filter\n def multiply(value, arg):\n+    \"\"\"Multiply value by arg\"\"\"\n     try:\n-        return value * arg\n-    except (TypeError, ValueError):\n+        return Decimal(str(value)) * Decimal(str(arg))\n+    except (ValueError, TypeError, decimal.InvalidOperation):\n         return 0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739395311195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n+from decimal import Decimal\n+import decimal\n import os\n from django import template\n \n from django import template\n"
+                },
+                {
+                    "date": 1739396142184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,8 @@\n         return value\n \n @register.filter\n def multiply(value, arg):\n-    \"\"\"Multiply value by arg\"\"\"\n     try:\n-        return Decimal(str(value)) * Decimal(str(arg))\n-    except (ValueError, TypeError, decimal.InvalidOperation):\n+        return value * arg\n+    except (TypeError, ValueError):\n         return 0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739396183704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n         return value\n \n @register.filter\n def multiply(value, arg):\n+    \"\"\"Multiply value by arg\"\"\"\n     try:\n-        return value * arg\n-    except (TypeError, ValueError):\n+        return Decimal(str(value)) * Decimal(str(arg))\n+    except (ValueError, TypeError, decimal.InvalidOperation):\n         return 0\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1739190636154,
+            "name": "Commit-0",
+            "content": "import os\nfrom django import template\n\nfrom django import template\n\nregister = template.Library()\n\n@register.filter\ndef format_price(value):\n    try:\n        # Convertir en string et inverser\n        str_value = str(int(value))[::-1]\n        # Ajouter les points tous les 3 chiffres\n        groups = [str_value[i:i+3] for i in range(0, len(str_value), 3)]\n        # Rejoindre avec des points et réinverser\n        formatted = '.'.join(groups)[::-1]\n        return formatted\n    except (ValueError, TypeError):\n        return value"
+        }
+    ]
+}

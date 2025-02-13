@@ -1,0 +1,44 @@
+ 
+# views.py
+from django.views.generic import ListView
+from django.db.models import Q
+from .models import Product, Category, ParentCategory
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'home/product.html'
+    context_object_name = 'products'
+    paginate_by = 10  # Pagination facultative, 10 produits par page
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Ajouter les catégories et catégories parentes pour les filtres
+        context['categories'] = Category.objects.all()
+        context['parent_categories'] = ParentCategory.objects.all()
+        
+        # Récupérer les paramètres de recherche
+        context['search_name'] = self.request.GET.get('search_name', '')
+        context['category_id'] = self.request.GET.get('category', '')
+        context['parent_category_id'] = self.request.GET.get('parent_category', '')
+        
+        return context
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        
+        # Filtre par nom de produit
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(name__icontains=search_name)
+        
+        # Filtre par catégorie
+        category_id = self.request.GET.get('category')
+        if category_id:
+            queryset = queryset.filter(category_id=category_id)
+        
+        # Filtre par catégorie parente
+        parent_category_id = self.request.GET.get('parent_category')
+        if parent_category_id:
+            queryset = queryset.filter(parent_id=parent_category_id)
+            
+        return queryset.order_by('name')
