@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-danger">Gestion des Produits</h2>
+        <a href="{% url 'product-create' %}" class="btn btn-danger">
+            <i class="fas fa-plus"></i> Ajouter un Produit
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header">
+            <form id="filterForm" method="get" action="" class="d-flex gap-3 align-items-center">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input 
+                        type="search" 
+                        name="search_name" 
+                        class="form-control" 
+                        value="{{ search_name }}" 
+                        placeholder="Rechercher un produit..."
+                    >
+                </div>
+                
+                <select name="category" class="form-select">
+                    <option value="">Tous les produits</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" 
+                            {% if category_id|stringformat:"s" == category.id|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="parent_category" class="form-select">
+                    <option value="">Toutes les catégories de teint</option>
+                    {% for parent in parent_categories %}
+                        <option value="{{ parent.id }}"
+                            {% if parent_category_id|stringformat:"s" == parent.id|stringformat:"s" %}selected{% endif %}>
+                            {{ parent.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <button type="reset" class="btn btn-outline-secondary" id="resetFilters">
+                    <i class="fas fa-times"></i> Réinitialiser
+                </button>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th class="text-center">En Stock</th>
+                            <th class="text-center">Restant</th>
+                            <th class="text-center">Sortie</th>
+                            <th class="text-center">Statut</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                {% endif %}
+                                {{ product.name }}
+                            </td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.price|intcomma }} FCFA</td>
+                            <td class="text-center">{{ product.stock_quantity }}</td>
+                            <td class="text-center">
+                                <span class="badge {% if product.available_quantity > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ product.available_quantity }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge {% if product.out > 0 %}bg-warning{% else %}bg-success{% endif %}">
+                                    {{ product.out }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge 
+                                    {% if product.status == 'available' %}bg-success
+                                    {% elif product.status == 'out_of_stock' %}bg-warning
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ product.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'product-detail' product.pk %}" class="btn btn-info btn-sm" title="Voir">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'product-update' product.pk %}" class="btn btn-warning btn-sm" title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'product-delete' product.pk %}" class="btn btn-danger btn-sm" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4">
+                                <div class="text-muted">Aucun produit trouvé</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('filterForm');
+    const resetButton = document.getElementById('resetFilters');
+    let searchTimeout;
+
+    // Fonction pour soumettre le formulaire avec un délai
+    function delayedSubmit() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            form.submit();
+        }, 500);
+    }
+
+    // Gérer la recherche par nom
+    form.querySelector('input[name="search_name"]').addEventListener('input', delayedSubmit);
+
+    // Gérer les changements de sélection
+    form.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => form.submit());
+    });
+
+    // Gérer la réinitialisation
+    resetButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        form.querySelectorAll('input, select').forEach(element => {
+            element.value = '';
+        });
+        form.submit();
+    });
+
+    // Empêcher la soumission sur "Enter" pour éviter la double soumission
+    form.addEventListener('submit', (e) => {
+        const activeElement = document.activeElement;
+        if (activeElement.tagName === 'INPUT' && activeElement.type === 'search') {
+            e.preventDefault();
+            delayedSubmit();
+        }
+    });
+});
+</script>

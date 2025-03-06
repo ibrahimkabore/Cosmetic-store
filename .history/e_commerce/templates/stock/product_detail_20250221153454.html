@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'product-list' %}">Produits</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="text-center p-5 bg-light rounded">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                            <p class="mt-2">Aucune image disponible</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">Détails du Produit</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Catégorie</div>
+                        <div class="col-sm-8">{{ product.category }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Prix</div>
+                        <div class="col-sm-8">
+                            <span class="h4">{{ product.price }} FCFA</span>
+                            {% if product.discount_percentage %}
+                                <span class="badge bg-danger ms-2">-{{ product.discount_percentage }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Quantité en Stock</div>
+                        <div class="col-sm-8">{{ product.stock_quantity }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Disponible</div>
+                        <div class="col-sm-8">
+                            <span class="badge {% if available_quantity > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ available_quantity }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted-danger">Statut</div>
+                        <div class="col-sm-8">
+                            <span class="badge 
+                                {% if product.status == 'available' %}bg-success
+                                {% elif product.status == 'out_of_stock' %}bg-warning
+                                {% else %}bg-danger{% endif %}">
+                                {{ product.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Description</div>
+                        <div class="col-sm-8">{{ product.description|linebreaks }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Historique des Transactions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Quantité</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in cart_item_history %}
+                                <tr>
+                                    <td>{{ history.history_date|date:"d/m/Y H:i" }}</td>
+                                    <td>{{ history.quantity }}</td>
+                                    <td>
+                                        <span class="badge {% if history.history_type == '+' %}bg-success{% elif history.history_type == '-' %}bg-danger{% else %}bg-info{% endif %}">
+                                            {% if history.history_type == '+' %}Ajout
+                                            {% elif history.history_type == '-' %}Suppression
+                                            {% else %}Modification{% endif %}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-3">Aucun historique de transaction</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "e_commerce/templates/registration/email_verification.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1740091734354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740091748377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n                             {% if form.code.errors %}\r\n                             <div class=\"text-danger mt-2\">{{ form.code.errors }}</div>\r\n                             {% endif %}\r\n                         </div>\r\n-                        <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block rounded-pill\">Vérifier</button>\r\n+                        <button type=\"submit\" class=\"btn btn-danger btn-lg btn-block rounded-pill\">Vérifier</button>\r\n                     </form>\r\n                 </div>\r\n             </div>\r\n         </div>\r\n"
+                }
+            ],
+            "date": 1740091734354,
+            "name": "Commit-0",
+            "content": "{% extends 'registration/base.html' %}\r\n{% load static %}\r\n{% load static i18n %}\r\n{% block content %}\r\n<div class=\"container mt-5\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-md-6\">\r\n            <div class=\"card shadow-sm border-0\">\r\n                <a class=\"navbar-brand mx-auto mt-2 flex-fill text-center\" href=\"#\">\r\n                    <div class=\"w-100 mb-4\">\r\n                        <div class=\"navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column\">\r\n                            <img src=\"{% static 'img/logo/ghislaine.png' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 180px; height: auto;\">\r\n                            <h2 class=\"h4 mb-1 mt-3 text-dark font-weight-bold\">Ghislaine Cosmetic</h2>\r\n                        </div>\r\n                    </div>\r\n                </a>\r\n                <hr>\r\n                \r\n                <div class=\"card-header text-center bg-light border-0\">\r\n                    <h2 class=\"text-muted\">Vérification par Email</h2>\r\n                </div>\r\n                <div class=\"card-body p-4\">\r\n                    {% if messages %}\r\n                    {% for message in messages %}\r\n                    <div class=\"alert {{ message.tags }} mb-3\">\r\n                        {{ message }}\r\n                    </div>\r\n                    {% endfor %}\r\n                    {% endif %}\r\n                    <p class=\"text-muted mb-4\">Un code de vérification à 6 chiffres a été envoyé à votre adresse e-mail. Veuillez entrer le code ci-dessous.</p>\r\n                    <form method=\"post\">\r\n                        {% csrf_token %}\r\n                        <div class=\"form-group mb-4\">\r\n                            <label for=\"{{ form.code.id_for_label }}\" class=\"text-muted\">Code de Vérification</label>\r\n                            {{ form.code }}\r\n                            {% if form.code.errors %}\r\n                            <div class=\"text-danger mt-2\">{{ form.code.errors }}</div>\r\n                            {% endif %}\r\n                        </div>\r\n                        <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block rounded-pill\">Vérifier</button>\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n{% endblock %}\r\n"
+        }
+    ]
+}

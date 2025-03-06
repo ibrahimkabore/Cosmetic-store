@@ -1,0 +1,26 @@
+{
+    "sourceFile": "e_commerce/templates/registration/two_factor_method.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1740091576501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740091599538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n                                 </label>\r\n                             </div>\r\n                             {% endfor %}\r\n                         </div>\r\n-                        <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block rounded-pill\">Continuer</button>\r\n+                        <button type=\"submit\" class=\"btn btn-danger btn-lg btn-block rounded-pill\">Continuer</button>\r\n                     </form>\r\n                 </div>\r\n             </div>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1740091627048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,44 @@\n+{% extends 'registration/base.html' %}\r\n+{% load static %}\r\n+{% load static i18n %}\r\n+{% block content %}\r\n+<div class=\"container mt-5\">\r\n+    <div class=\"row justify-content-center\">\r\n+        <div class=\"col-md-6\">\r\n+            <div class=\"card shadow-sm border-0\">\r\n+                <a class=\"navbar-brand mx-auto mt-2 flex-fill text-center\" href=\"#\">\r\n+                    <div class=\"w-100 mb-4\">\r\n+                        <div class=\"navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column\">\r\n+                            <img src=\"{% static 'img/logo/ghislaine.png' %}\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"max-width: 180px; height: auto;\">\r\n+                            <h2 class=\"h4 mb-1 mt-3 text-dark font-weight-bold\">Ghislaine Cosmetic</h2>\r\n+                        </div>\r\n+                    </div>\r\n+                </a>\r\n+                <hr>\r\n+                \r\n+                <div class=\"card-header text-center bg-light border-0\">\r\n+                    <h2 class=\"text-muted\">Authentification à Deux Facteurs</h2>\r\n+                </div>\r\n+                <div class=\"card-body p-4\">\r\n+                    <form method=\"post\">\r\n+                        {% csrf_token %}\r\n+                        <div class=\"form-group mb-4\">\r\n+                            <h4 class=\"text-muted\">Choisir une méthode de vérification</h4>\r\n+                            {% for radio in form.two_factor_method %}\r\n+                            <div class=\"form-check mb-3\">\r\n+                                {{ radio.tag }}\r\n+                                <label class=\"form-check-label\" for=\"{{ radio.id_for_label }}\">\r\n+                                    {{ radio.choice_label }}\r\n+                                </label>\r\n+                            </div>\r\n+                            {% endfor %}\r\n+                        </div>\r\n+                        <button type=\"submit\" class=\"btn btn-danger btn-lg btn-block rounded-pill\">Continuer</button>\r\n+                    </form>\r\n+                </div>\r\n+            </div>\r\n+        </div>\r\n+    </div>\r\n+</div>\r\n+\r\n+{% endblock %}\r\n"
+                }
+            ],
+            "date": 1740091576501,
+            "name": "Commit-0",
+            "content": "{% extends 'registration/base.html' %}\r\n{% load static %}\r\n{% load static i18n %}\r\n{% block content %}\r\n<div class=\"container mt-5\">\r\n    <div class=\"row justify-content-center\">\r\n        <div class=\"col-md-6\">\r\n            <div class=\"card shadow-sm border-0\">\r\n                <div class=\"card-header text-center bg-light border-0\">\r\n                    <h2 class=\"text-muted\">Authentification à Deux Facteurs</h2>\r\n                </div>\r\n                <div class=\"card-body p-4\">\r\n                    <form method=\"post\">\r\n                        {% csrf_token %}\r\n                        <div class=\"form-group mb-4\">\r\n                            <h4 class=\"text-muted\">Choisir une méthode de vérification</h4>\r\n                            {% for radio in form.two_factor_method %}\r\n                            <div class=\"form-check mb-3\">\r\n                                {{ radio.tag }}\r\n                                <label class=\"form-check-label\" for=\"{{ radio.id_for_label }}\">\r\n                                    {{ radio.choice_label }}\r\n                                </label>\r\n                            </div>\r\n                            {% endfor %}\r\n                        </div>\r\n                        <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block rounded-pill\">Continuer</button>\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n{% endblock %}\r\n"
+        }
+    ]
+}

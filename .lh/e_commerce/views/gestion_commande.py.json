@@ -1,0 +1,30 @@
+{
+    "sourceFile": "e_commerce/views/gestion_commande.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1740160238125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740160291649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,10 @@\n from django.shortcuts import render\r\n from e_commerce.models import CartItem, Order\r\n \r\n \r\n-def order_list(request):\r\n-    orders = Order.objects.filter(user=request.user).order_by('-created_at')\r\n+def order_list_gestion(request):\r\n+    orders = Order.objects.all().order_by('-created_at')\r\n     if request.user.is_authenticated:\r\n         number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n     else:\r\n         number = 0\r\n@@ -15,5 +15,5 @@\n         'orders': orders\r\n     }\r\n     \r\n    \r\n-    return render(request, 'home/commande.html', context)\r\n+    return render(request, 'home/confirmation_commande.html', context)\r\n"
+                },
+                {
+                    "date": 1740160364445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,6 @@\n         'orders': orders,\r\n         'number': number,\r\n         'orders': orders\r\n     }\r\n-    \r\n-   \r\n+ \r\n     return render(request, 'home/confirmation_commande.html', context)\r\n"
+                },
+                {
+                    "date": 1740160581955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n         'number': number,\r\n         'orders': orders\r\n     }\r\n  \r\n-    return render(request, 'home/confirmation_commande.html', context)\r\n+    return render(request, 'home/gestion_commande.html', context)\r\n"
+                }
+            ],
+            "date": 1740160238125,
+            "name": "Commit-0",
+            "content": "\r\nfrom django.shortcuts import render\r\nfrom e_commerce.models import CartItem, Order\r\n\r\n\r\ndef order_list(request):\r\n    orders = Order.objects.filter(user=request.user).order_by('-created_at')\r\n    if request.user.is_authenticated:\r\n        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n    else:\r\n        number = 0\r\n    context = {\r\n        'orders': orders,\r\n        'number': number,\r\n        'orders': orders\r\n    }\r\n    \r\n   \r\n    return render(request, 'home/commande.html', context)\r\n"
+        }
+    ]
+}

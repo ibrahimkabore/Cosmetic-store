@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ product.name }}</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <p><strong>Category:</strong> {{ product.category }}</p>
+            <p><strong>Price:</strong> {{ product.price }}</p>
+            <p><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
+            <p><strong>Available Quantity:</strong> {{ available_quantity }}</p>
+            <p><strong>Status:</strong> {{ product.get_status_display }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            
+            <h3>Recent Transactions</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for history in cart_item_history %}
+                    <tr>
+                        <td>{{ history.history_date }}</td>
+                        <td>{{ history.quantity }}</td>
+                        <td>{{ history.history_type }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-danger">Gestion des produits</h2>
+        <a href="{% url 'product-create' %}" class="btn btn-danger">
+            <i class="fas fa-plus"></i> Add New Product
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th class="text-center">Stock</th>
+                            <th class="text-center">Available</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                {% endif %}
+                                {{ product.name }}
+                            </td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.price }}</td>
+                            <td class="text-center">{{ product.stock_quantity }}</td>
+                            <td class="text-center">
+                                <span class="badge {% if product.available_quantity > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ product.available_quantity }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge 
+                                    {% if product.status == 'available' %}bg-success
+                                    {% elif product.status == 'out_of_stock' %}bg-warning
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ product.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'product-detail' product.pk %}" class="btn btn-info btn-sm" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'product-update' product.pk %}" class="btn btn-warning btn-sm" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'product-delete' product.pk %}" class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <div class="text-muted">No products found</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

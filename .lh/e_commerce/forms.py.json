@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1739206370560,
@@ -36,6 +36,10 @@
                 {
                     "date": 1739224128875,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n #formualire de creation de compte \r\n class  CustomUserForm(UserCreationForm):\r\n     class Meta:\r\n         model = CustomUser\r\n-        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','country','city','gender',)\r\n+        fields = ('first_name','last_name', 'email','phone','username','password1', 'password2','gender')\r\n         \r\n     def clean_email(self):\r\n         email = self.cleaned_data.get('email')\r\n         if CustomUser.objects.filter(email=email).exists():\r\n"
+                },
+                {
+                    "date": 1740140654097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,5 +83,34 @@\n     code = forms.CharField(\r\n         max_length=6,\r\n         widget=forms.TextInput(attrs={'placeholder': 'Enter Google Authenticator code'})\r\n     )\r\n-    \n\\ No newline at end of file\n+    \r\n+\r\n+\r\n+# forms.py\r\n+from django import forms\r\n+from .models import Product\r\n+\r\n+class ProductForm(forms.ModelForm):\r\n+    class Meta:\r\n+        model = Product\r\n+        fields = ['name', 'description', 'category', 'parent', 'price', \r\n+                 'discount_percentage', 'stock_quantity', 'status', 'image',\r\n+                 'bestseller', 'recommended', 'star_product']\r\n+\r\n+    def __init__(self, *args, **kwargs):\r\n+        super().__init__(*args, **kwargs)\r\n+        # Add Bootstrap classes to all fields\r\n+        for field_name, field in self.fields.items():\r\n+            if isinstance(field.widget, forms.TextInput) or \\\r\n+               isinstance(field.widget, forms.NumberInput) or \\\r\n+               isinstance(field.widget, forms.EmailInput) or \\\r\n+               isinstance(field.widget, forms.URLInput) or \\\r\n+               isinstance(field.widget, forms.PasswordInput) or \\\r\n+               isinstance(field.widget, forms.Textarea) or \\\r\n+               isinstance(field.widget, forms.Select):\r\n+                field.widget.attrs['class'] = 'form-control'\r\n+            elif isinstance(field.widget, forms.CheckboxInput):\r\n+                field.widget.attrs['class'] = 'form-check-input'\r\n+            elif isinstance(field.widget, forms.FileInput):\r\n+                field.widget.attrs['class'] = 'form-control'\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739206370560,

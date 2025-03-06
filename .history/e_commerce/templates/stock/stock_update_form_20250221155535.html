@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header bg-primary text-white">
+        <h4 class="card-title mb-0">Mise à jour du stock</h4>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{% url 'update-stock' product.id %}" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="form-label">Type d'opération</label>
+                <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="operation" id="set" value="set" checked>
+                    <label class="btn btn-outline-primary" for="set">Définir</label>
+                    
+                    <input type="radio" class="btn-check" name="operation" id="add" value="add">
+                    <label class="btn btn-outline-success" for="add">Ajouter</label>
+                    
+                    <input type="radio" class="btn-check" name="operation" id="subtract" value="subtract">
+                    <label class="btn btn-outline-warning" for="subtract">Retirer</label>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantité</label>
+                <div class="input-group">
+                    <input type="number" 
+                           class="form-control" 
+                           id="quantity" 
+                           name="quantity" 
+                           min="0" 
+                           value="{{ product.stock_quantity }}"
+                           required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Mettre à jour
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card-footer bg-light">
+        <small class="text-muted">
+            <i class="fas fa-info-circle"></i>
+            Statut actuel: 
+            <span class="badge 
+                {% if product.status == 'available' %}bg-success
+                {% elif product.status == 'out_of_stock' %}bg-danger
+                {% else %}bg-warning{% endif %}">
+                {{ product.get_status_display }}
+            </span>
+        </small>
+    </div>
+</div>

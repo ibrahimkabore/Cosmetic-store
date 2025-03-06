@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1739201639035,
@@ -108,6 +108,14 @@
                 {
                     "date": 1739375393019,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,23 +6,11 @@\n \r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-     # Vérifier si l'utilisateur est authentifié\r\n-    if request.user.is_authenticated:\r\n-        try:\r\n-            # Récupérer les favoris de l'utilisateur\r\n-            user_favorites = list(Favorite.objects.filter(\r\n-                user=request.user\r\n-            ).values_list('product_id', flat=True))\r\n-            user_favorites = [str(id) for id in user_favorites]\r\n-        except Exception as e:\r\n-            print(f\"Error fetching favorites: {e}\")\r\n-            user_favorites = []\r\n-            \r\n+    \r\n     return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites,\r\n-        'user_favorites': user_favorites,\r\n+        'favorites': favorites\r\n     })\r\n \r\n @login_required\r\n def toggle_favorite(request, product_id):\r\n"
+                },
+                {
+                    "date": 1739878045460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,17 @@\n from django.shortcuts import get_object_or_404, render\r\n-from e_commerce.models import Product,Favorite\r\n+from e_commerce.models import CartItem, Product,Favorite\r\n from django.contrib.auth.decorators import login_required\r\n from django.http import JsonResponse\r\n from django.shortcuts import render\r\n \r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-    \r\n+    number =CartItem.objects.count\r\n     return render(request, 'home/favoris.html', {\r\n-        'favorites': favorites\r\n+        'favorites': favorites,\r\n+        'number': number,\r\n     })\r\n \r\n @login_required\r\n def toggle_favorite(request, product_id):\r\n"
+                },
+                {
+                    "date": 1739909883060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,12 @@\n \r\n @login_required\r\n def favorite_list(request):\r\n     favorites = Favorite.objects.filter(user=request.user).select_related('product')\r\n-    number =CartItem.objects.count\r\n+    if request.user.is_authenticated:\r\n+        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n+    else:\r\n+        number = 0\r\n     return render(request, 'home/favoris.html', {\r\n         'favorites': favorites,\r\n         'number': number,\r\n     })\r\n"
                 }
             ],
             "date": 1739201639035,

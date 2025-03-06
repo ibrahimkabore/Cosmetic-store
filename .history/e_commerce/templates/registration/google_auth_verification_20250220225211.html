@@ -1,0 +1,54 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{% load static i18n %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <!-- Logo Section -->
+                <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="#">
+                    <div class="w-100 mb-4">
+                        <div class="navbar-brand-wrapper d-flex align-items-center justify-content-center flex-column">
+                            <img src="{% static 'img/logo/ghislaine.png' %}" alt="logo" class="img-fluid rounded-circle" style="max-width: 180px; height: auto;">
+                            <h2 class="h4 mb-1 mt-3 text-dark font-weight-bold">Ghislaine Cosmetic</h2>
+                        </div>
+                    </div>
+                </a>
+                <hr>
+                
+                <!-- Card Header -->
+                <div class="card-header text-center bg-light border-0">
+                    <h2 class="text-muted">Vérification Google Authenticator</h2>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-4">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }} mb-3">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <p class="text-muted mb-4">Entrez le code à 6 chiffres provenant de votre application Google Authenticator.</p>
+                    
+                    <!-- Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            <label for="{{ form.code.id_for_label }}" class="text-muted">Code d'authentification</label>
+                            {{ form.code }}
+                            {% if form.code.errors %}
+                            <div class="text-danger mt-2">{{ form.code.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill">Vérifier</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

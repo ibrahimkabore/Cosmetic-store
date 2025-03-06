@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1739105920697,
@@ -168,6 +168,22 @@
                 {
                     "date": 1739440188790,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n             <!-- site menu -->\r\n \t\t\t<ul class=\"main-menu\">\r\n \t\t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\r\n \t\t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\r\n-\t\t\t\t<li><a href=\"{% url 'shoppingcart' %}\">🛒 Mon Panier</a></li>\r\n+\t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier</a></li>\r\n \t\t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \r\n \t\t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\r\n \t\t\t</ul>\r\n \t\t\t\r\n"
+                },
+                {
+                    "date": 1739878366906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n             <!-- site menu -->\r\n \t\t\t<ul class=\"main-menu\">\r\n \t\t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\r\n \t\t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\r\n-\t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier</a></li>\r\n+\t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\r\n \t\t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \r\n \t\t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\r\n \t\t\t</ul>\r\n \t\t\t\r\n"
+                },
+                {
+                    "date": 1739878485971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,23 @@\n \r\n     <script src=\"{% static 'js/hidden_input.js' %}\"></script>\r\n \r\n </head>\r\n- \r\n+<style>\r\n+\t.cart-number {\r\n+\t\tdisplay: inline-block; /* Permet de traiter le nombre comme un élément de bloc */\r\n+\t\twidth: 30px; /* Largeur du cercle */\r\n+\t\theight: 30px; /* Hauteur du cercle */\r\n+\t\tbackground-color: #ff5733; /* Couleur de fond du cercle */\r\n+\t\tcolor: white; /* Couleur du texte (le nombre) */\r\n+\t\tborder-radius: 50%; /* Crée le cercle */\r\n+\t\ttext-align: center; /* Centre le texte horizontalement */\r\n+\t\tline-height: 30px; /* Centre le texte verticalement */\r\n+\t\tfont-weight: bold; /* Style du texte */\r\n+\t\tfont-size: 1em; /* Taille du texte */\r\n+\t}\r\n+\t\r\n+</style>\r\n <body>\r\n \t{% comment %} <!-- Page Preloder -->\r\n \t<div id=\"preloder\">\r\n \t\t<div class=\"loader\"></div>\r\n"
+                },
+                {
+                    "date": 1740159914467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,14 +84,22 @@\n                 </div>\r\n             </div>\r\n             <!-- site menu -->\r\n \t\t\t<ul class=\"main-menu\">\r\n-\t\t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\r\n-\t\t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\r\n-\t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\r\n-\t\t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \r\n-\t\t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\r\n-\t\t\t</ul>\r\n+                <li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\r\n+                <li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\r\n+                \r\n+                {% if user.type_user == 'G' %}\r\n+                    <!-- Si l'utilisateur est un gestionnaire (par exemple, un utilisateur 'staff  ') -->\r\n+                    <li><a href=\"\">🛠️ Gestion de Commande</a></li>\r\n+                {% else %}\r\n+                    <!-- Si l'utilisateur n'est pas un gestionnaire, on affiche le panier -->\r\n+                    <li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\r\n+                {% endif %}\r\n+                \r\n+                <li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \r\n+                <li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\r\n+            </ul>\r\n \t\t\t\r\n         </div>\r\n     </header>\r\n \t<!-- Header section end -->\r\n"
+                },
+                {
+                    "date": 1740160482171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n                 <li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\r\n                 \r\n                 {% if user.type_user == 'G' %}\r\n                     <!-- Si l'utilisateur est un gestionnaire (par exemple, un utilisateur 'staff  ') -->\r\n-                    <li><a href=\"\">🛠️ Gestion de Commande</a></li>\r\n+                    <li><a href=\"{% url 'order_list_gestion'%}\">🛠️ Gestion de Commande<span class=\"cart-number\">{{ number }}</span></a></li>\r\n                 {% else %}\r\n                     <!-- Si l'utilisateur n'est pas un gestionnaire, on affiche le panier -->\r\n                     <li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\r\n                 {% endif %}\r\n"
                 }
             ],
             "date": 1739105920697,

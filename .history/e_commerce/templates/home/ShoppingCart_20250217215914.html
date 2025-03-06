@@ -1,0 +1,362 @@
+{% load static %}
+{% load humanize %}
+
+{% load custom_filters %} 
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Ghislaine Cosmetic</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="The Plaza eCommerce Template">
+    <meta name="keywords" content="plaza, eCommerce, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/ghislaine-icon.png' %}" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+
+    <!-- Scripts -->
+    <script src="{% static 'js/hidden_input.js' %}"></script>
+</head>
+
+ 
+<body>
+	{% comment %} <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+
+	<!-- Header section -->
+ <!-- Header section -->
+ <header class="header-section header-normal">
+	<div class="container-fluid">
+		<!-- logo -->
+		<div class="site-logo">
+			<img src="{% static "img/logo/gislaine.jpg" %}" alt="logo">
+		</div>
+		<!-- responsive -->
+		<div class="nav-switch">
+			<i class="fa fa-bars"></i>
+		</div>
+
+		<div class="header-right">
+			<div class="user-connection">
+				{% if user.is_authenticated %}
+				<div class="dropdown">
+					<a href="#" class="user-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> {{ user.username }}
+					</a>
+					<div class="dropdown-menu">
+						<!-- Apply the same style as login button to Mon Profil -->
+						<a class="dropdown-item" href=" ">
+							<i class="fas fa-user-cog"></i> Mon Profil
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{% url 'deconnexion' %}">
+							<i class="fas fa-sign-out-alt"></i> Déconnexion
+						</a>
+					</div>
+				</div>
+				
+				{% else %}
+					<a href="{% url 'login' %}" class="login-btn">
+						<i class="fas fa-user"></i> Connexion
+					</a>
+				{% endif %}
+				
+			</div>
+		</div>
+		<!-- site menu -->
+		<ul class="main-menu">
+			<li><a href="{% url 'Home' %}">🏠 Accueil</a></li>
+			<li><a href="{% url 'product' %}">📦 Nos Produits</a></li>
+			<li><a href="{% url 'cart' %}">🛒 Mon Panier</a></li>
+			<li><a href="{% url 'favoris' %}">❤️ Mes Favoris</a></li>      
+			<li><a href="{% url 'contact' %}">✉️ Contact</a></li>
+		</ul>
+		
+	</div>
+</header>
+<!-- Header section end -->
+
+
+<!-- Page Info -->
+<div class="page-info-section page-info">
+	<div class="container">
+		<h2>🛒 Mon Panier</h2>
+		<div class="site-breadcrumb">
+			<a href="{% url 'Home' %}">Accueil</a> /
+			 
+			<span>Favoris</span>
+		</div>
+		<img src="{% static 'img/square_bold.png' %}" alt="" class="page-info-art">
+	</div>
+</div>
+<!-- Page Info end -->
+ 
+<div class="page-area cart-page spad">
+    <div class="container">
+        <div class="cart-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="product-th">Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th class="total-th">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr data-item-id="{{ item.id }}">
+                        <td class="product-col">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/product/default.jpg' %}" alt="Default product image">
+                            {% endif %}
+                            <div class="pc-title">
+                                <h4>{{ item.product.name }}</h4>
+                                <a href="#" class="remove-item" data-item-id="{{ item.id }}">Retirer</a>
+                            </div>
+                        </td>
+                        <td class="price-col">{{ item.product.price|intcomma}} cfa</td>
+                        <td class="quy-col">
+                            <div class="quy-input">
+                                <input type="number" 
+                                       min="1" 
+                                       max="{{ item.product.stock_quantity }}" 
+                                       value="{{ item.product.quantity }}"
+                                       class="quantity-input"
+                                       data-item-id="{{ item.id }}">
+                            </div>
+                        </td>
+                        <td class="total-col">
+                            {{ item.product.price|multiply:item.quantity|intcomma }} cfa
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Votre panier est vide</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+		<p>total : {{subtotal|intcomma }} cfa</p>
+        <div class="row cart-buttons">
+            <div class="col-lg-5 col-md-5">
+                <a href="{% url 'product' %}" class="site-btn btn-continue">Continue shopping</a>
+            </div>
+            <div class="col-lg-7 col-md-7 text-lg-right text-left">
+                <button class="site-btn btn-clear" id="clear-cart">Clear cart</button>
+                <button class="site-btn btn-line btn-update" id="update-cart">Update Cart</button>
+            </div>
+        </div>
+    </div>
+    <!-- ... reste du template inchangé ... -->
+</div>
+<!-- Page end -->
+
+
+<!-- Footer top section -->
+<section class="footer-top-section home-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-8 col-sm-12">
+ 
+			<div class="footer-widget about-widget">
+				<img src="{% static 'img/logo/gislaine.jpg' %}" class="footer-logo" alt="">
+				<div class="cards">
+					<img src="{% static 'img/cards/5.png' %}" alt="">
+					<img src="{% static 'img/cards/4.png' %}" alt="">
+					<img src="{% static 'img/cards/3.png' %}" alt="">
+					<img src="{% static 'img/cards/2.png' %}" alt="">
+				</div>
+			</div>
+
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">usefull Links</h6>
+					<ul>
+						<li><a href="#">Partners</a></li>
+						<li><a href="#">Bloggers</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Press</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Sitemap</h6>
+					<ul>
+						<li><a href="#">Partners</a></li>
+						<li><a href="#">Bloggers</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Press</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Shipping & returns</h6>
+					<ul>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Track Orders</a></li>
+						<li><a href="#">Returns</a></li>
+						<li><a href="#">Jobs</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Blog</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Contact</h6>
+					<div class="text-box">
+						<p>Your Company Ltd </p>
+						<p>1481 Creekside Lane Avila Beach, CA 93424, </p>
+						<p>+53 345 7953 32453</p>
+						<p>office@youremail.com</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Footer top section end -->
+
+
+<!-- Footer section -->
+<footer class="footer-section">
+    <div class="container">
+        <p class="copyright">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | Powered by 
+            <a href="https://onma.io/" target="_blank">
+                <img src="{% static 'img/logo/onma.png' %}" alt="Onma" style="height: 20px; vertical-align: middle;">
+            </a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </p>
+    </div>
+</footer>
+
+<!-- Footer section end -->
+
+
+<!--====== Javascripts & Jquery ======-->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/mixitup.min.js' %}"></script>
+<script src="{% static 'js/sly.min.js' %}"></script>
+<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/core.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle item removal
+        document.querySelectorAll('.remove-item').forEach(function (removeButton) {
+            removeButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                const itemId = this.getAttribute('data-item-id');
+
+                // AJAX request to remove the item
+                fetch(`/remove-item/${itemId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: new URLSearchParams({
+                        'item_id': itemId,
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        // Remove the item row from the table
+                        document.querySelector(`tr[data-item-id="${itemId}"]`).remove();
+                    } else {
+                        alert("Error removing item from the cart");
+                    }
+                });
+            });
+        });
+    });
+ 
+    
+        // Handle quantity change
+        document.querySelectorAll('.quantity-input').forEach(function (quantityInput) {
+            quantityInput.addEventListener('change', function (e) {
+                const itemId = this.getAttribute('data-item-id');
+                const newQuantity = this.value;
+
+                // AJAX request to update the quantity
+                fetch(`/update-quantity/${itemId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: new URLSearchParams({
+                        'item_id': itemId,
+                        'quantity': newQuantity
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        // Update the total price in the table row
+                        const totalCell = document.querySelector(`tr[data-item-id="${itemId}"] .total-col`);
+                        totalCell.textContent = `${newQuantity * {{ item.product.price }} } CFA`;
+                    } else {
+                        alert("Error updating the cart item");
+                    }
+                });
+            });
+        });
+    ;
+ 
+     
+        // Handle clearing the cart
+        const clearCartButton = document.getElementById('clear-cart');
+        if (clearCartButton) {
+            clearCartButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // AJAX request to clear the cart
+                fetch('/clear-cart/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        // Clear all cart items from the table
+                        document.querySelector('.cart-table tbody').innerHTML = `
+                            <tr>
+                                <td colspan="4" class="text-center">Votre panier est vide</td>
+                            </tr>
+                        `;
+                    } else {
+                        alert("Error clearing the cart");
+                    }
+                });
+            });
+        }
+    ;
+</script>
+
+</html>

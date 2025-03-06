@@ -1,0 +1,314 @@
+{% load static %}
+{% load humanize %}
+
+{% load custom_filters %} 
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Ghislaine Cosmetic</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="The Plaza eCommerce Template">
+    <meta name="keywords" content="plaza, eCommerce, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/ghislaine-icon.png' %}" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+
+    <!-- Scripts -->
+    <script src="{% static 'js/hidden_input.js' %}"></script>
+</head>
+ 
+<body>
+	{% comment %} <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+
+	<!-- Header section -->
+ <!-- Header section -->
+ <header class="header-section header-normal">
+	<div class="container-fluid">
+		<!-- logo -->
+		<div class="site-logo">
+			<img src="{% static "img/logo/gislaine.jpg" %}" alt="logo">
+		</div>
+		<!-- responsive -->
+		<div class="nav-switch">
+			<i class="fa fa-bars"></i>
+		</div>
+
+		<div class="header-right">
+			<div class="user-connection">
+				{% if user.is_authenticated %}
+				<div class="dropdown">
+					<a href="#" class="user-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> {{ user.username }}
+					</a>
+					<div class="dropdown-menu">
+						<!-- Apply the same style as login button to Mon Profil -->
+						<a class="dropdown-item" href=" ">
+							<i class="fas fa-user-cog"></i> Mon Profil
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{% url 'deconnexion' %}">
+							<i class="fas fa-sign-out-alt"></i> Déconnexion
+						</a>
+					</div>
+				</div>
+				
+				{% else %}
+					<a href="{% url 'login' %}" class="login-btn">
+						<i class="fas fa-user"></i> Connexion
+					</a>
+				{% endif %}
+				
+			</div>
+		</div>
+		<!-- site menu -->
+		<ul class="main-menu">
+			<li><a href="{% url 'Home' %}">🏠 Accueil</a></li>
+			<li><a href="{% url 'product' %}">📦 Nos Produits</a></li>
+			<li><a href="{% url 'cart' %}">🛒 Mon Panier <span class="cart-number">{{ number }}</span></a></li>
+			<li><a href="{% url 'favoris' %}">❤️ Mes Favoris</a></li>      
+			<li><a href="{% url 'contact' %}">✉️ Contact</a></li>
+		</ul>
+		
+	</div>
+</header>
+<!-- Header section end -->
+
+
+<!-- Page Info -->
+<div class="page-info-section page-info">
+	<div class="container">
+		<div class="container-fluid">
+			{% include "layouts/_message.html" %}
+			
+		  </div>
+		<h2>🗃️ Mes commandes</h2>
+		<div class="site-breadcrumb">
+			<a href="{% url 'Home' %}">Accueil</a> /
+			<a href="{% url 'cart' %}">panier</a> /
+			 
+			<span>commande</span>
+		</div><br>
+		 
+		<img src="{% static 'img/square_bold.png' %}" alt="" class="page-info-art">
+	</div>
+</div>
+<!-- Orders List Section -->
+<section class="cart-section">
+    <div class="container">
+        {% if orders %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Payment Method</th>
+                            <th>Total</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.ref }}</td>
+                                <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    <span class="badge {% if order.status == 'EA' %}badge-warning
+                                        {% elif order.status == 'PC' %}badge-info
+                                        {% elif order.status == 'EP' %}badge-primary
+                                        {% elif order.status == 'EX' %}badge-info
+                                        {% elif order.status == 'LV' %}badge-success
+                                        {% elif order.status == 'AN' %}badge-danger
+                                        {% elif order.status == 'RB' %}badge-secondary
+                                        {% endif %}">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>{{ order.get_payment_method_display }}</td>
+                                <td>{{ order.total|intcomma }} FCFA</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#orderModal{{ order.id }}">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Modal for Order Details -->
+                            <div class="modal fade" id="orderModal{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel{{ order.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="orderModalLabel{{ order.id }}">Order Details - {{ order.reference }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>Articles à commander :</h6>
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for line in order.lines.all %}
+                                                        <tr>
+                                                            <td>{{ line.product.name }}</td>
+                                                            <td>{{ line.quantity }}</td>
+                                                            <td>{{ line.unit_price|intcomma }}CFA</td>
+                                                            <td>{{ line.line_total|intcomma }} CFA</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+											<a href="{% url 'cart' %}" class="btn btn-danger">Retour</a>
+										</div>
+										
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <h3>Aucune commande trouvée</h3>
+                <p>Vous n'avez pas encore passé de commande.</p>
+                <a href="{% url 'product' %}" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Start Shopping
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Footer top section -->
+<section class="footer-top-section home-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-8 col-sm-12">
+ 
+			<div class="footer-widget about-widget">
+				<img src="{% static 'img/logo/gislaine.jpg' %}" class="footer-logo" alt="">
+				<div class="cards">
+					<img src="{% static 'img/cards/5.png' %}" alt="">
+					<img src="{% static 'img/cards/4.png' %}" alt="">
+					<img src="{% static 'img/cards/3.png' %}" alt="">
+					<img src="{% static 'img/cards/2.png' %}" alt="">
+				</div>
+			</div>
+
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">usefull Links</h6>
+					<ul>
+						<li><a href="#">Partners</a></li>
+						<li><a href="#">Bloggers</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Press</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Sitemap</h6>
+					<ul>
+						<li><a href="#">Partners</a></li>
+						<li><a href="#">Bloggers</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Press</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Shipping & returns</h6>
+					<ul>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Track Orders</a></li>
+						<li><a href="#">Returns</a></li>
+						<li><a href="#">Jobs</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Blog</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<div class="footer-widget">
+					<h6 class="fw-title">Contact</h6>
+					<div class="text-box">
+						<p>Your Company Ltd </p>
+						<p>1481 Creekside Lane Avila Beach, CA 93424, </p>
+						<p>+53 345 7953 32453</p>
+						<p>office@youremail.com</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Footer top section end -->
+
+
+<!-- Footer section -->
+<footer class="footer-section">
+    <div class="container">
+        <p class="copyright">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | Powered by 
+            <a href="https://onma.io/" target="_blank">
+                <img src="{% static 'img/logo/onma.png' %}" alt="Onma" style="height: 20px; vertical-align: middle;">
+            </a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </p>
+    </div>
+</footer>
+
+<!-- Footer section end -->
+
+
+<!--====== Javascripts & Jquery ======-->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/mixitup.min.js' %}"></script>
+<script src="{% static 'js/sly.min.js' %}"></script>
+<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/core.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+<script>
+
+
+
+</script>
+</html>

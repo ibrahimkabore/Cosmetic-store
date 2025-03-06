@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1739025251185,
@@ -20,6 +20,14 @@
                 {
                     "date": 1739191070572,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,7 +4,7 @@\n     product = get_object_or_404(Product, pk=pk)\r\n     return render(request, 'home/detail.html', {'product': product})\r\n \r\n def Detail_product (request,pk):\r\n-    products = get_object_or_404(Product, pk=pk)\r\n-    return render(request, 'home/detail_product.html', {'products': products})\r\n+    product = get_object_or_404(Product, pk=pk)\r\n+    return render(request, 'home/detail_product.html', {'product': product})\r\n \r\n"
+                },
+                {
+                    "date": 1739878017602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,12 @@\n from django.shortcuts import get_object_or_404, render\r\n-from e_commerce.models import Product\r\n+from e_commerce.models import CartItem, Product\r\n def Detail (request,pk):\r\n     product = get_object_or_404(Product, pk=pk)\r\n-    return render(request, 'home/detail.html', {'product': product})\r\n+    number =CartItem.objects.count\r\n+    return render(request, 'home/detail.html', {'product': product,'number': number})\r\n \r\n def Detail_product (request,pk):\r\n     product = get_object_or_404(Product, pk=pk)\r\n-    return render(request, 'home/detail_product.html', {'product': product})\r\n+    number =CartItem.objects.count\r\n+    return render(request, 'home/detail_product.html', {'product': product,'number': number})\r\n \r\n"
+                },
+                {
+                    "date": 1739909876384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,18 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import CartItem, Product\r\n def Detail (request,pk):\r\n     product = get_object_or_404(Product, pk=pk)\r\n-    number =CartItem.objects.count\r\n+    if request.user.is_authenticated:\r\n+        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n+    else:\r\n+        number = 0\r\n     return render(request, 'home/detail.html', {'product': product,'number': number})\r\n \r\n def Detail_product (request,pk):\r\n     product = get_object_or_404(Product, pk=pk)\r\n-    number =CartItem.objects.count\r\n+    if request.user.is_authenticated:\r\n+        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n+    else:\r\n+        number = 0\r\n     return render(request, 'home/detail_product.html', {'product': product,'number': number})\r\n \r\n"
                 }
             ],
             "date": 1739025251185,

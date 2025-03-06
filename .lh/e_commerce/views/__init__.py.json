@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1738702778646,
@@ -40,6 +40,26 @@
                 {
                     "date": 1739307424421,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n from .detail import*\r\n from .product import*\r\n from .contact import*\r\n from .favoris import*\r\n-from .auth import*\n\\ No newline at end of file\n+from .auth import*\r\n+from .shoppingcart import*\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739910966200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,6 @@\n from .product import*\r\n from .contact import*\r\n from .favoris import*\r\n from .auth import*\r\n-from .shoppingcart import*\n\\ No newline at end of file\n+from .shoppingcart import*\r\n+from .order import*\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739956579076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,6 @@\n from .contact import*\r\n from .favoris import*\r\n from .auth import*\r\n from .shoppingcart import*\r\n-from .order import*\n\\ No newline at end of file\n+from .order import*\r\n+from .history import*\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739964762997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n from .favoris import*\r\n from .auth import*\r\n from .shoppingcart import*\r\n from .order import*\r\n-from .history import*\n\\ No newline at end of file\n+from .commande import*\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740131713907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,6 @@\n from .favoris import*\r\n from .auth import*\r\n from .shoppingcart import*\r\n from .order import*\r\n-from .commande import*\n\\ No newline at end of file\n+from .commande import*\r\n+from .stock import*\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740160347392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+from .redirection import *\r\n+from .Home import *\r\n+from .detail import*\r\n+from .product import*\r\n+from .contact import*\r\n+from .favoris import*\r\n+from .auth import*\r\n+from .shoppingcart import*\r\n+from .order import*\r\n+from .commande import*\r\n+from .stock import*\r\n+from .gestion_commande import*\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1738702778646,

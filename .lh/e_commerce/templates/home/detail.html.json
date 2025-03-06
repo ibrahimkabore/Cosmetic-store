@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 71,
+            "activePatchIndex": 78,
             "patches": [
                 {
                     "date": 1738953136391,
@@ -292,6 +292,34 @@
                 {
                     "date": 1739445021794,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n \t\t<!-- site menu -->\n \t\t<ul class=\"main-menu\">\n \t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\n \t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\n-\t\t\t<li><a href=\"{% url 'shoppingcart' %}\">🛒 Mon Panier</a></li>\n+\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier</a></li>\n \t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \n \t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\n \t\t</ul>\n \t\t\n"
+                },
+                {
+                    "date": 1739875519664,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,9 +152,16 @@\n \t\t\t\t\t\t</div>\n \t\t\t\t\t\t<p>{{product.description}}</p>\n \t\t\t\t\t\t \n \t\t\t\t\t\t \n-\t\t\t\t\t\t<a href=\"#\" class=\"site-btn btn-line\">ADD TO CART</a>\n+\t\t\t\t\t\t<a href=\"{% url 'add_to_cart_detail' product.id %}\" class=\"site-btn btn-line add-to-cart-btn\" \n+\t\t\t\t\t\t{% if product.stock_quantity < 1 %} class=\"disabled\" {% endif %}>\n+\t\t\t\t\t\t\t{% if product.stock_quantity < 1 %}\n+\t\t\t\t\t\t\t\tRupture de stock\n+\t\t\t\t\t\t\t{% else %}\n+\t\t\t\t\t\t\t\tAjouter au panier\n+\t\t\t\t\t\t\t{% endif %}\n+\t\t\t\t\t</a>\n \t\t\t\t\t</div>\n \t\t\t\t</div>\n \t\t\t</div>\n </div>\n"
+                },
+                {
+                    "date": 1739876583938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,9 +152,9 @@\n \t\t\t\t\t\t</div>\n \t\t\t\t\t\t<p>{{product.description}}</p>\n \t\t\t\t\t\t \n \t\t\t\t\t\t \n-\t\t\t\t\t\t<a href=\"{% url 'add_to_cart_detail' product.id %}\" class=\"site-btn btn-line add-to-cart-btn\" \n+\t\t\t\t\t\t<a href=\"{% url 'add_to_cart_detail' product.pk%}\" class=\"site-btn btn-line add-to-cart-btn\" \n \t\t\t\t\t\t{% if product.stock_quantity < 1 %} class=\"disabled\" {% endif %}>\n \t\t\t\t\t\t\t{% if product.stock_quantity < 1 %}\n \t\t\t\t\t\t\t\tRupture de stock\n \t\t\t\t\t\t\t{% else %}\n"
+                },
+                {
+                    "date": 1739876741779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,9 +152,9 @@\n \t\t\t\t\t\t</div>\n \t\t\t\t\t\t<p>{{product.description}}</p>\n \t\t\t\t\t\t \n \t\t\t\t\t\t \n-\t\t\t\t\t\t<a href=\"{% url 'add_to_cart_detail' product.pk%}\" class=\"site-btn btn-line add-to-cart-btn\" \n+\t\t\t\t\t\t<a href=\"{% url 'add_to_cart_home' product.pk%}\" class=\"site-btn btn-line add-to-cart-btn\" \n \t\t\t\t\t\t{% if product.stock_quantity < 1 %} class=\"disabled\" {% endif %}>\n \t\t\t\t\t\t\t{% if product.stock_quantity < 1 %}\n \t\t\t\t\t\t\t\tRupture de stock\n \t\t\t\t\t\t\t{% else %}\n"
+                },
+                {
+                    "date": 1739878357562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n \t\t<!-- site menu -->\n \t\t<ul class=\"main-menu\">\n \t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\n \t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\n-\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier</a></li>\n+\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\n \t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \n \t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\n \t\t</ul>\n \t\t\n"
+                },
+                {
+                    "date": 1739878471767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,23 @@\n \n     <!-- Scripts -->\n     <script src=\"{% static 'js/hidden_input.js' %}\"></script>\n </head>\n-\n+<style>\n+\t.cart-number {\n+\t\tdisplay: inline-block; /* Permet de traiter le nombre comme un élément de bloc */\n+\t\twidth: 30px; /* Largeur du cercle */\n+\t\theight: 30px; /* Hauteur du cercle */\n+\t\tbackground-color: #ff5733; /* Couleur de fond du cercle */\n+\t\tcolor: white; /* Couleur du texte (le nombre) */\n+\t\tborder-radius: 50%; /* Crée le cercle */\n+\t\ttext-align: center; /* Centre le texte horizontalement */\n+\t\tline-height: 30px; /* Centre le texte verticalement */\n+\t\tfont-weight: bold; /* Style du texte */\n+\t\tfont-size: 1em; /* Taille du texte */\n+\t}\n+\t\n+</style>\n  \n <body>\n \t{% comment %} <!-- Page Preloder -->\n \t<div id=\"preloder\">\n"
+                },
+                {
+                    "date": 1740159927475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -92,9 +92,17 @@\n \t\t<!-- site menu -->\n \t\t<ul class=\"main-menu\">\n \t\t\t<li><a href=\"{% url 'Home' %}\">🏠 Accueil</a></li>\n \t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\n-\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\n+\t\t\t\n+\t\t\t{% if user.type_user == 'G' %}\n+\t\t\t\t<!-- Si l'utilisateur est un gestionnaire (par exemple, un utilisateur 'staff  ') -->\n+\t\t\t\t<li><a href=\"\">🛠️ Gestion de Commande</a></li>\n+\t\t\t{% else %}\n+\t\t\t\t<!-- Si l'utilisateur n'est pas un gestionnaire, on affiche le panier -->\n+\t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\n+\t\t\t{% endif %}\n+\t\t\t\n \t\t\t<li><a href=\"{% url 'favoris' %}\">❤️ Mes Favoris</a></li>      \n \t\t\t<li><a href=\"{% url 'contact' %}\">✉️ Contact</a></li>\n \t\t</ul>\n \t\t\n"
+                },
+                {
+                    "date": 1740160474223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,10 +95,10 @@\n \t\t\t<li><a href=\"{% url 'product' %}\">📦 Nos Produits</a></li>\n \t\t\t\n \t\t\t{% if user.type_user == 'G' %}\n \t\t\t\t<!-- Si l'utilisateur est un gestionnaire (par exemple, un utilisateur 'staff  ') -->\n-\t\t\t\t<li><a href=\"\">🛠️ Gestion de Commande</a></li>\n-\t\t\t{% else %}\n+\t\t\t\t<li><a href=\"{% url 'order_list_gestion'%}\">🛠️ Gestion de Commande<span class=\"cart-number\">{{ number }}</span></a></li>\n+\t\t\t\t{% else %}\n \t\t\t\t<!-- Si l'utilisateur n'est pas un gestionnaire, on affiche le panier -->\n \t\t\t\t<li><a href=\"{% url 'cart' %}\">🛒 Mon Panier <span class=\"cart-number\">{{ number }}</span></a></li>\n \t\t\t{% endif %}\n \t\t\t\n"
                 }
             ],
             "date": 1738953136391,

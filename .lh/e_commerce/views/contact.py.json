@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1739105669036,
@@ -16,6 +16,14 @@
                 {
                     "date": 1739105720975,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,5 @@\n \r\n \r\n def contact (request):\r\n     \r\n-    return render( request 'home/contact.html')\n\\ No newline at end of file\n+    return render(request,'home/contact.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739877972737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n \r\n from django.shortcuts import render\r\n \r\n+from e_commerce.models import CartItem\r\n \r\n+\r\n def contact (request):\r\n\\ No newline at end of file\n+    number =CartItem.objects.count\r\n     \r\n-    return render(request,'home/contact.html')\n+    return render(request,'home/contact.html',{'number':number})\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739909862489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,7 +4,11 @@\n from e_commerce.models import CartItem\r\n \r\n \r\n def contact (request):\r\n-    number =CartItem.objects.count\r\n+    if request.user.is_authenticated:\r\n+        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n+    else:\r\n+        number = 0\r\n+\r\n     \r\n     return render(request,'home/contact.html',{'number':number})\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739105669036,

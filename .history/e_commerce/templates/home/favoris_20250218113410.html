@@ -1,0 +1,433 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Ghislaine Cosmetic</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="The Plaza eCommerce Template">
+    <meta name="keywords" content="plaza, eCommerce, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/ghislaine-icon.png' %}" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+
+    <!-- Scripts -->
+    <script src="{% static 'js/hidden_input.js' %}"></script>
+</head>
+<style>
+	.favorite-btn, .favorite-btn-unauthorized {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .favorite-btn i, .favorite-btn-unauthorized i {
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+    
+    .favorite-btn .fa-heart {
+        color: #ff4d4d;
+    }
+    
+    .favorite-btn:hover .fa-heart-o,
+    .favorite-btn-unauthorized:hover .fa-heart-o {
+        color: #ff4d4d;
+    }
+    
+    .pi-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;  /* Espace entre les boutons */
+    }
+    
+    .pi-m-left, .favorite-btn, .favorite-btn-unauthorized {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+    }
+    
+    /* Style pour le lien de détail */
+    .detail-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    /* Style pour les icônes */
+    .fa {
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+    
+    /* Style pour le texte */
+    .pi-meta p {
+        margin: 0;
+    }
+    
+    /* Style pour l'icône de cœur */
+    .fa-heart {
+        color: #ff4d4d;
+    }
+    
+    /* Hover effects */
+    .detail-link:hover .fa-eye {
+        color: #007bff;
+    }
+    
+    .favorite-btn:hover .fa-heart-o,
+    .favorite-btn-unauthorized:hover .fa-heart-o {
+        color: #ff4d4d;
+    }
+    .favorite-btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .favorite-btn i {
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+    
+    .favorite-btn .fa-heart {
+        color: #ff4d4d;
+    }
+    
+    .favorite-btn:hover .fa-heart-o {
+        color: #ff4d4d;
+    }
+    
+    /* Style pour le bouton désactivé */
+    .add-to-cart-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+
+	.cart-number {
+		display: inline-block; /* Permet de traiter le nombre comme un élément de bloc */
+		width: 30px; /* Largeur du cercle */
+		height: 30px; /* Hauteur du cercle */
+		background-color: #ff5733; /* Couleur de fond du cercle */
+		color: white; /* Couleur du texte (le nombre) */
+		border-radius: 50%; /* Crée le cercle */
+		text-align: center; /* Centre le texte horizontalement */
+		line-height: 30px; /* Centre le texte verticalement */
+		font-weight: bold; /* Style du texte */
+		font-size: 1em; /* Taille du texte */
+	}
+	
+	</style>
+
+<body>
+	{% comment %} <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div> {% endcomment %}
+
+	<!-- Header section -->
+ <!-- Header section -->
+ <header class="header-section header-normal">
+	<div class="container-fluid">
+		<!-- logo -->
+		<div class="site-logo">
+			<img src="{% static "img/logo/gislaine.jpg" %}" alt="logo">
+		</div>
+		<!-- responsive -->
+		<div class="nav-switch">
+			<i class="fa fa-bars"></i>
+		</div>
+
+		<div class="header-right">
+			<div class="user-connection">
+				{% if user.is_authenticated %}
+				<div class="dropdown">
+					<a href="#" class="user-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> {{ user.username }}
+					</a>
+					<div class="dropdown-menu">
+						<!-- Apply the same style as login button to Mon Profil -->
+						<a class="dropdown-item" href=" ">
+							<i class="fas fa-user-cog"></i> Mon Profil
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{% url 'deconnexion' %}">
+							<i class="fas fa-sign-out-alt"></i> Déconnexion
+						</a>
+					</div>
+				</div>
+				
+				{% else %}
+					<a href="{% url 'login' %}" class="login-btn">
+						<i class="fas fa-user"></i> Connexion
+					</a>
+				{% endif %}
+			</div>
+		</div>
+		<!-- site menu -->
+		<ul class="main-menu">
+			<li><a href="{% url 'Home' %}">🏠 Accueil</a></li>
+			<li><a href="{% url 'product' %}">📦 Nos Produits</a></li>
+			<li><a href="{% url 'cart' %}">🛒 Mon Panier <span class="cart-number">{{ number }}</span></a></li>
+			<li><a href="{% url 'favoris' %}">❤️ Mes Favoris</a></li>      
+			<li><a href="{% url 'contact' %}">✉️ Contact</a></li>
+		</ul>
+		
+	</div>
+</header>
+<!-- Header section end -->
+
+
+<!-- Page Info -->
+<div class="page-info-section page-info">
+	<div class="container">
+		<div class="container-fluid">
+			{% include "layouts/_message.html" %}
+			
+		  </div>
+		<h2>❤️ Mes Favoris</h2>
+		<div class="site-breadcrumb">
+			<a href="{% url 'Home' %}">Accueil</a> /
+			 
+			<span>Favoris</span>
+		</div>
+		
+		<img src="{% static 'img/square_bold.png' %}" alt="" class="page-info-art">
+	</div>
+</div>
+ 
+<div class="page-area product-page spad">
+	
+	<section class="favorites-section">
+		<div class="container">
+			<h2 class="section-title">Mes Favoris</h2>
+			<div class="row" id="favorites-container">
+				{% for favorite in favorites %}
+				<div class="mix col-lg-3 col-md-6" id="favorite-item-{{ favorite.product.id }}">
+					<div class="product-item">
+						<figure>
+							{% if favorite.product.image %}
+								<img src="{{ favorite.product.image.url }}" alt="{{ favorite.product.name }}">
+							{% else %}
+								<img src="{% static 'img/default-product.jpg' %}" alt="Default Image">
+							{% endif %}
+							<div class="pi-meta">
+								<div class="pi-m-left">
+									<a href="{% url 'Detail' favorite.product.pk %}" class="detail-link">
+										<i class="fa fa-eye"></i>
+										<p>Detail</p>
+									</a>
+								</div>
+								<div class="pi-m-right favorite-toggle" data-product-id="{{ favorite.product.id }}">
+									<i class="fa fa-heart"></i>
+									<p>Retirer des favoris</p>
+								</div>
+							</div>
+						</figure>
+						<div class="product-info">
+							<h6>{{ favorite.product.name }}</h6>
+							<p>{{ favorite.product.price|intcomma }} CFA</p>
+							<a href="{% url 'add_to_cart_favoris' favorite.product.id %}" class="site-btn btn-line add-to-cart-btn" 
+								{% if product.stock_quantity < 1 %} class="disabled" {% endif %}>
+									{% if product.stock_quantity < 1 %}
+										Rupture de stock
+									{% else %}
+										Ajouter au panier
+									{% endif %}
+							</a>
+						</div>
+					</div>
+				</div>
+				{% empty %}
+				<div class="col-12 text-center" id="empty-favorites">
+					<p>Vous n'avez pas encore de produits favoris.</p>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	
+	 
+</div>
+<hr>
+	<!-- Page end -->
+	<!-- Footer top section -->
+		<section class="footer-top-section home-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-8 col-sm-12">
+						<div class="footer-widget about-widget">
+							<img src="{% static 'img/logo/gislaine.jpg' %}" class="footer-logo" alt="">
+							<div class="cards">
+								<img src="{% static 'img/cards/5.png' %}" alt="">
+								<img src="{% static 'img/cards/4.png' %}" alt="">
+								<img src="{% static 'img/cards/3.png' %}" alt="">
+								<img src="{% static 'img/cards/2.png' %}" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4 col-sm-6">
+						<div class="footer-widget">
+							<h6 class="fw-title">usefull Links</h6>
+							<ul>
+								<li><a href="#">Partners</a></li>
+								<li><a href="#">Bloggers</a></li>
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Press</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-4 col-sm-6">
+						<div class="footer-widget">
+							<h6 class="fw-title">Sitemap</h6>
+							<ul>
+								<li><a href="#">Partners</a></li>
+								<li><a href="#">Bloggers</a></li>
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Press</a></li>
+							</ul>
+						</div>
+					</div>
+					 
+					<div class="col-lg-2 col-md-4 col-sm-6">
+						<div class="footer-widget">
+							<h6 class="fw-title">Contact</h6>
+							<div class="text-box">
+								<p>Your Company Ltd </p>
+								<p>1481 Creekside Lane Avila Beach, CA 93424, </p>
+								<p>+53 345 7953 32453</p>
+								<p>office@youremail.com</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Footer top section end -->
+	
+		<footer class="footer-section">
+			<div class="container">
+				<p class="copyright">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>document.write(new Date().getFullYear());</script> All rights reserved | Powered by 
+					<a href="https://onma.io/" target="_blank">
+						<img src="{% static 'img/logo/onma.png' %}" alt="Onma" style="height: 20px; vertical-align: middle;">
+					</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</footer>
+		
+ 	 <!-- Footer section end -->
+
+
+<!--====== Javascripts & Jquery ======-->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/mixitup.min.js' %}"></script>
+<script src="{% static 'js/sly.min.js' %}"></script>
+<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/core.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const favoritesContainer = document.getElementById('favorites-container');
+		const emptyMessage = document.getElementById('empty-favorites');
+		
+		// Fonction pour gérer le retrait des favoris
+		document.querySelectorAll('.favorite-toggle').forEach(button => {
+			button.addEventListener('click', function() {
+				const productId = this.dataset.productId;
+				const favoriteItem = document.getElementById(`favorite-item-${productId}`);
+				
+				// Ajouter classe pour désactiver le bouton pendant la requête
+				this.classList.add('removing');
+				
+				fetch(`/toggle-favorite/${productId}/`, {
+					method: 'POST',
+					headers: {
+						'X-CSRFToken': getCookie('csrftoken'),
+						'Content-Type': 'application/json',
+					},
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.status === 'success') {
+						// Ajouter effet de fade out
+						favoriteItem.classList.add('fade-out');
+						
+						// Retirer l'élément après l'animation
+						setTimeout(() => {
+							favoriteItem.remove();
+							
+							// Vérifier s'il reste des favoris
+							if (favoritesContainer.children.length === 0) {
+								if (emptyMessage) {
+									emptyMessage.style.display = 'block';
+								} else {
+									const emptyDiv = document.createElement('div');
+									emptyDiv.className = 'col-12 text-center';
+									emptyDiv.id = 'empty-favorites';
+									emptyDiv.innerHTML = '<p>Vous n\'avez pas encore de produits favoris.</p>';
+									favoritesContainer.appendChild(emptyDiv);
+								}
+							}
+						}, 300);
+					} else {
+						alert(data.message);
+						this.classList.remove('removing');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					alert('Une erreur est survenue');
+					this.classList.remove('removing');
+				});
+			});
+		});
+		
+		// Fonction pour récupérer le cookie CSRF
+		function getCookie(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+	});
+	</script>
+</html>

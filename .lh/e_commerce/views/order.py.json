@@ -1,0 +1,26 @@
+{
+    "sourceFile": "e_commerce/views/order.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739910858049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739910873011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.shortcuts import get_object_or_404, render\r\n from e_commerce.models import CartItem, Product\r\n-def Dcommandetail (request,pk):\r\n+def commande (request,pk):\r\n     product = get_object_or_404(Product, pk=pk)\r\n     if request.user.is_authenticated:\r\n         number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n     else:\r\n         number = 0\r\n-    return render(request, 'home/detail.html', {'product': product,'number': number})\r\n+    return render(request, 'home/commande.html', {'product': product,'number': number})\r\n"
+                },
+                {
+                    "date": 1739911099189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,9 @@\n+from django.shortcuts import get_object_or_404, render\r\n+from e_commerce.models import CartItem, Product\r\n+def commande (request):\r\n+   \r\n+    if request.user.is_authenticated:\r\n+        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n+    else:\r\n+        number = 0\r\n+    return render(request, 'home/commande.html', {'number': number})\r\n"
+                }
+            ],
+            "date": 1739910858049,
+            "name": "Commit-0",
+            "content": "from django.shortcuts import get_object_or_404, render\r\nfrom e_commerce.models import CartItem, Product\r\ndef Dcommandetail (request,pk):\r\n    product = get_object_or_404(Product, pk=pk)\r\n    if request.user.is_authenticated:\r\n        number = CartItem.objects.filter(cart__user=request.user, cart__is_active=True).count()\r\n    else:\r\n        number = 0\r\n    return render(request, 'home/detail.html', {'product': product,'number': number})\r\n"
+        }
+    ]
+}

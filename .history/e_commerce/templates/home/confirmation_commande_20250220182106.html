@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 20px 0; }
+        .order-details { margin: 20px 0; }
+        .product-list { margin: 20px 0; }
+        .product-item { padding: 10px 0; border-bottom: 1px solid #eee; }
+        .total { margin-top: 20px; font-weight: bold; }
+        .footer { text-align: center; margin-top: 30px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Confirmation de commande</h1>
+            <p>Merci pour votre commande!</p>
+        </div>
+
+        <div class="order-details">
+            <p><strong>Référence:</strong> {{ commande.reference }}</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Mode de paiement:</strong> {{ mode_paiement }}</p>
+        </div>
+
+        <div class="product-list">
+            <h2>Articles commandés:</h2>
+            {% for article in articles %}
+            <div class="product-item">
+                <p>
+                    <strong>{{ article.produit.nom }}</strong><br>
+                    Quantité: {{ article.quantite }}<br>
+                    Prix unitaire: {{ article.prix_unitaire }}FCFA<br>
+                    Total: {{ article.prix_total }} FCFA
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="total">
+            <p>Total de la commande: {{ total }}FCFA</p>
+        </div>
+
+        <div class="footer">
+            <p>En cas de question, n'hésitez pas à nous contacter.</p>
+            <p>Merci de votre confiance!</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "requirements.txt",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1740264517988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1740264517988,
+            "name": "Commit-0",
+            "content": "asgiref==3.8.1\r\nbeautifulsoup4==4.13.2\r\ncolorama==0.4.6\r\ncrispy-bootstrap4==2024.10\r\nDjango==5.1.6\r\ndjango-bootstrap4==24.4\r\ndjango-crispy-forms==2.3\r\ndjango-formtools==2.5.1\r\ndjango-lifecycle==1.2.4\r\ndjango-otp==1.5.4\r\ndjango-phonenumber-field==8.0.0\r\ndjango-safedelete==1.4.0\r\ndjango-simple-history==3.8.0\r\ndjango-two-factor-auth==1.17.0\r\ndjongo==1.3.7\r\npackaging==24.2\r\nphonenumbers==8.13.54\r\npillow==11.1.0\r\npip==25.0\r\npsycopg2-binary==2.9.10\r\npymongo==3.11.4\r\npyotp==2.9.0\r\npypng==0.20220715.0\r\npython-decouple==3.8\r\npytz==2025.1\r\nqrcode==7.4.2\r\nsetuptools==75.8.0\r\nsoupsieve==2.6\r\nsqlparse==0.5.3\r\ntyping_extensions==4.12.2\r\ntzdata==2025.1\r\n"
+        }
+    ]
+}

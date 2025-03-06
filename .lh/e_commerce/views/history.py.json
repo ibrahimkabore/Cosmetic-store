@@ -1,0 +1,30 @@
+{
+    "sourceFile": "e_commerce/views/history.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1739963987481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739964044318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,17 +4,7 @@\n \r\n def history(request):\r\n     \r\n     # Récupération de l'historique des commandes\r\n-    history = request.session.get('history', [])\r\n     \r\n-    # Récupération des produits et des prix correspondants\r\n-    products = Product.objects.all()\r\n-    prices = {product.id: product.price for product in products}\r\n     \r\n-    # Création du contexte\r\n-    context = {\r\n-        'history': history,\r\n-        'prices': prices\r\n-    }\r\n-    \r\n-    return render(request, 'home/history.html', context)\n\\ No newline at end of file\n+    return render(request, 'home/history.html')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739964653042,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n \r\n from django.shortcuts import render\r\n \r\n \r\n-def history(request):\r\n+def comma(request):\r\n     \r\n     # Récupération de l'historique des commandes\r\n     \r\n     \r\n"
+                },
+                {
+                    "date": 1739964732326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n \r\n from django.shortcuts import render\r\n \r\n \r\n-def comma(request):\r\n+def commande(request):\r\n     \r\n     # Récupération de l'historique des commandes\r\n     \r\n     \r\n\\ No newline at end of file\n-    return render(request, 'home/history.html')\n+    return render(request, 'home/commande.html')\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1739963987481,
+            "name": "Commit-0",
+            "content": "\r\nfrom django.shortcuts import render\r\n\r\n\r\ndef history(request):\r\n    \r\n    # Récupération de l'historique des commandes\r\n    history = request.session.get('history', [])\r\n    \r\n    # Récupération des produits et des prix correspondants\r\n    products = Product.objects.all()\r\n    prices = {product.id: product.price for product in products}\r\n    \r\n    # Création du contexte\r\n    context = {\r\n        'history': history,\r\n        'prices': prices\r\n    }\r\n    \r\n    return render(request, 'home/history.html', context)"
+        }
+    ]
+}
