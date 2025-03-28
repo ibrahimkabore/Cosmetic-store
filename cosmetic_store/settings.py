@@ -107,35 +107,35 @@ WSGI_APPLICATION = "cosmetic_store.wsgi.application"
 
  
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', default='5432'),
-        # 'OPTIONS': {
-        #     'sslmode': 'require',  # Force SSL
-        #     'connect_timeout': 5,   # Timeout de connexion en secondes
-        # },
-        # 'CONN_MAX_AGE': 60,        # Durée de vie maximale des connexions en secondes
-    },
-    'mongodb': {
-        'ENGINE': 'djongo',
-        'NAME': 'E_commerce_log',
-        'CLIENT': {
-            'host': config('MONGO_URI', default='mongodb://localhost:27017'),
-            'ssl': True,
-            'authSource': 'admin',
-            'username': config('MONGO_USER', default=''),
-            'password': config('MONGO_PASSWORD', default=''),
-            # 'connectTimeoutMS': 5000,
-            # 'socketTimeoutMS': 5000,
-            # 'maxPoolSize': 50,
-        }
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': config('DB_PORT', default='5432'),
+#         # 'OPTIONS': {
+#         #     'sslmode': 'require',  # Force SSL
+#         #     'connect_timeout': 5,   # Timeout de connexion en secondes
+#         # },
+#         # 'CONN_MAX_AGE': 60,        # Durée de vie maximale des connexions en secondes
+#     },
+#     'mongodb': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'E_commerce_log',
+#         'CLIENT': {
+#             'host': config('MONGO_URI', default='mongodb://localhost:27017'),
+#             'ssl': True,
+#             'authSource': 'admin',
+#             'username': config('MONGO_USER', default=''),
+#             'password': config('MONGO_PASSWORD', default=''),
+#             # 'connectTimeoutMS': 5000,
+#             # 'socketTimeoutMS': 5000,
+#             # 'maxPoolSize': 50,
+#         }
+#     }
+# }
 # DATABASE_ROUTERS = ['path.to.your.router.DatabaseRouter']
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
